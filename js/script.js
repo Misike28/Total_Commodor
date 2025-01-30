@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         function doResize(e) {
-            const newWidth = startWidth + (e.clientX - startX);
+            var newWidth = startWidth + (e.clientX - startX);
             resizerParent.style.width = newWidth + 'px';
             resizerParent.style.minWidth = newWidth + 'px';
             resizerParent.style.maxWidth = newWidth + 'px';
