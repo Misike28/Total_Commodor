@@ -1,6 +1,7 @@
 * {
     margin: 0;
-<<<<<<< Updated upstream
+    padding: 0;
+    box-sizing: border-box;
 
 }
 
@@ -15,25 +16,23 @@
     margin: auto;
 }
 
-.left{
+.left {
     width: 47.5%;
     height: 100%;
     background-color: rgb(221, 221, 221);
 }
-.middle{
+
+.middle {
     width: 5%;
     height: 100%;
     background-color: gray;
 }
-.right{
+
+.right {
     width: 47.5%;
     height: 100%;
     background-color: rgb(221, 221, 221);
 
-}
-=======
-    padding: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -96,7 +95,8 @@ table {
     border-collapse: collapse;
 }
 
-th, td {
+th,
+td {
     text-align: left;
     padding: 5px;
     position: relative;
@@ -117,5 +117,3 @@ th .resizer {
     cursor: col-resize;
     background-color: grey;
 }
-
->>>>>>> Stashed changes

@@ -1,10 +1,3 @@
-<<<<<<< Updated upstream
-function change(){
-    let width = document.getElementById("Name").style.width;
-document.getElementById("Name").style.width=width+1;
-
-}
-=======
 document.addEventListener('DOMContentLoaded', function() {
     const resizers = document.querySelectorAll('th .resizer');
     let startX, startWidth, resizerParent;
@@ -33,5 +26,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
->>>>>>> Stashed changes
