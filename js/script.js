@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const resizers = document.querySelectorAll('th .resizer');
+    const resizers = document.querySelectorAll('th .resizer, .middle .resizer');
     let startX, startWidth, resizerParent;
 
     resizers.forEach(resizer => {
@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function doResize(e) {
             const newWidth = startWidth + (e.clientX - startX);
-            resizerParent.style.width = newWidth + 'px';
-            resizerParent.style.minWidth = newWidth + 'px';
-            resizerParent.style.maxWidth = newWidth + 'px';
+            if (newWidth > 50) {
+                resizerParent.style.width = newWidth + 'px';
+                resizerParent.style.minWidth = newWidth + 'px';
+                resizerParent.style.maxWidth = newWidth + 'px';
+            }
         }
 
         function stopResize() {
@@ -26,3 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+function showDropdown() {
+    document.getElementById("dropdown").classList.toggle("show");
+}
+
+function showDropdown1() {
+    document.getElementById("dropdown1").classList.toggle("show");
+}

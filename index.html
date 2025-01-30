@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,15 +8,72 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js"></script>
 </head>
+
 <body>
 
     <div class="main">
+
         <div class="header">
             <h1>Total Commodor</h1>
         </div>
+
+        <div class="paths">
+
+            <div class="path">
+                <span class="dropdown-arrow" onclick="showDropdown()">&#9660;</span>
+                <div contenteditable="true">C:\Users\TotalCommodor</div>
+                <div class="dropdown-items" id="dropdown">
+                    <div class="item">
+                        <div>
+                            <p>C</p>
+                        </div>
+                        <div>
+                            <p>C neve</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div>
+                            <p>D</p>
+                        </div>
+                        <div>
+                            <p>D neve</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="middle">
+
+            </div>
+
+            <div class="path">
+                <span class="dropdown-arrow" onclick="showDropdown1()">&#9660;</span>
+                <div contenteditable="true">C:\Users\TotalCommodor</div>
+                <div class="dropdown-items" id="dropdown1">
+                    <div class="item">
+                        <div>
+                            <p>C</p>
+                        </div>
+                        <div>
+                            <p>C neve</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div>
+                            <p>D</p>
+                        </div>
+                        <div>
+                            <p>D neve</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="content">
 
-            <div class="window">
+            <div class="window" id="win">
                 <table>
                     <tr>
                         <th class="name">Name<span class="resizer"></span></th>
@@ -33,10 +91,10 @@
             </div>
 
             <div class="middle">
-                
+
             </div>
 
-            <div class="window">
+            <div class="window" id="win">
                 <table>
                     <tr>
                         <th class="name">Name<span class="resizer"></span></th>
@@ -55,6 +113,7 @@
 
         </div>
     </div>
-    
+
 </body>
+
 </html>
