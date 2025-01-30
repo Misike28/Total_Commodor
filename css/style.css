@@ -16,24 +16,7 @@
     margin: auto;
 }
 
-.left {
-    width: 47.5%;
-    height: 100%;
-    background-color: rgb(221, 221, 221);
-}
 
-.middle {
-    width: 5%;
-    height: 100%;
-    background-color: gray;
-}
-
-.right {
-    width: 47.5%;
-    height: 100%;
-    background-color: rgb(221, 221, 221);
-
-}
 
 body {
     display: flex;
@@ -68,9 +51,10 @@ body {
 }
 
 .window {
-    flex: 1;
+    width: 50%;
     border-radius: 5px;
     background-color: rgb(221, 221, 221);
+    overflow: auto;
 }
 
 .middle {
