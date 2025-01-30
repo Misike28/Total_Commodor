@@ -68,7 +68,7 @@ body {
 }
 
 .window {
-    width: 50%;
+    flex: 1;
     border-radius: 5px;
     background-color: rgb(221, 221, 221);
 }
