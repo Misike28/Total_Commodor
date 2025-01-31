@@ -1,23 +1,23 @@
 document.addEventListener('DOMContentLoaded', function () {
 
     var datak = {
-        "drive": {
-            "name": "C",
-            "folders": {
-                "folder1": {
+        drive: {
+            name: "C",
+            folders: {
+                folder1: {
                     "name": "windows",
                     "extension": "txt",
                     "size": "555 gb",
                     "date": "2069.69.6"
 
                 },
-                "folder2": {
+                folder2: {
                     "name": "steam",
                     "extension": "mp5",
                     "size": "23 mb",
                     "date": "2069.69.6"
                 },
-                "folder3": {
+                folder3: {
                     "name": "crypto",
                     "extension": "gun",
                     "size": "56 tb",
@@ -30,7 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get the table body element 
     const tableBody = document.getElementById('table1').getElementsByTagName('tbody')[0];
 
-    datak.drive.folders.forEach((element) => console.log(element));
+    datak.drive.folders.forEach(function(data, index) {
+        console.log(data);
+      });
 
 
     // Create a new row 
@@ -84,6 +86,20 @@ function showDropdown() {
 
 function showDropdown1() {
     document.getElementById("dropdown1").classList.toggle("show");
+}
+
+function lemezchange(lemez,path){
+    let string = ":\\";
+    document.getElementById(path).innerHTML=lemez+string;
+}
+
+function load(nev){
+    let szoveg =  document.getElementById("path").innerHTML;
+    document.getElementById("path").innerHTML=szoveg+nev;
+    checkfiles();
+}
+function checkfiles(){
+    
 }
 
 

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js"></script>
     <script src="data/data.json"></script>
+    <script src="https://kit.fontawesome.com/26a3e6423d.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -22,19 +23,19 @@
 
             <div class="path">
                 <span class="dropdown-arrow" onclick="showDropdown()">&#9660;</span>
-                <div contenteditable="true">C:\Users\TotalCommodor</div>
+                <div contenteditable="true" id="path">C:\</div>
                 <div class="dropdown-items" id="dropdown">
-                    <div class="item">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path')">
                         <div>
-                            <p>C</p>
+                            <p id="lemez">C</p>
                         </div>
                         <div>
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path')">
                         <div>
-                            <p>D</p>
+                            <p id="lemez2">D</p>
                         </div>
                         <div>
                             <p>D neve</p>
@@ -49,19 +50,19 @@
 
             <div class="path">
                 <span class="dropdown-arrow" onclick="showDropdown1()">&#9660;</span>
-                <div contenteditable="true">C:\Users\TotalCommodor</div>
+                <div contenteditable="true" id="path">C:\</div>
                 <div class="dropdown-items" id="dropdown1">
-                    <div class="item">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path')">
                         <div>
-                            <p>C</p>
+                            <p id="lemez">C</p>
                         </div>
                         <div>
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path')">
                         <div>
-                            <p>D</p>
+                            <p id="lemez2">D</p>
                         </div>
                         <div>
                             <p>D neve</p>
