@@ -1,6 +1,6 @@
 body{
-    background-color: #434b4c;
-    color: #a1b3b4;
+    background-color: #76ABAE;
+    color: #EEEEEE;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,15 +10,28 @@ body{
     width: 90%;
     display: flex;
     flex-direction: column;
-    background-color: #30343F;
+    background-color: #222831;
     height: 100%;
     border-radius: 10px;
     padding-left: 1%;
     padding-right: 1%;
 }
 
-.application-head{
-    display: block;
+.application-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.title-cont{
+    width: 50%;
+}
+
+.button-cont{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
 }
 
 .application-main{
@@ -31,7 +44,7 @@ body{
 
 .application-window{
     width: 60%;
-    background-color: #566776;
+    background-color: #31363F;
     height: 900px;
     padding: 1%;
 }
@@ -44,7 +57,7 @@ tr{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    transition: all 0.1s ease-in;
+    transition: all 0.1s linear;
 }
 
 table{
@@ -65,3 +78,73 @@ table{
     border-bottom-right-radius: 25px;
     border-top-right-radius: 25px ;
 }
+
+
+
+
+/* switch próba */
+.switch input{
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+}
+
+/* test
+.switch input:checked{
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+}
+*/
+
+.switch-slider {
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    max-width: 10px;
+  }
+  
+.switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+input:checked + .switch-slider {
+    background-color: #2196F3;
+  }
+  
+input:focus + .switch-slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+input:checked + .switch-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+.switch-slider.round {
+    border-radius: 34px;
+  }
+  
+.switch-slider.round:before {
+    border-radius: 50%;
+  }
+
+  /* 
+  https://www.w3schools.com/HOWTO/howto_css_switch.asp
+  https://www.w3schools.com/css/css3_animations.asp
+  */
