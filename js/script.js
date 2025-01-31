@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     "extension": "txt",
                     "size": "555 gb",
                     "date": "2069.69.6"
-    
+
                 },
                 "folder2": {
                     "name": "steam",
@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Get the table body element 
     const tableBody = document.getElementById('table1').getElementsByTagName('tbody')[0];
 
-    datak.forEach()
+    datak.drive.folders.forEach((element) => console.log(element));
+
 
     // Create a new row 
     const newRow = tableBody.insertRow();
@@ -42,11 +43,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const cell4 = newRow.insertCell(3);
 
     // Add data to the cells 
-    cell1.textContent = datak.drive.folders.folder1.name;  
-    cell2.textContent = datak.drive.folders.folder1.extension;        
+    cell1.textContent = datak.drive.folders.folder1.name;
+    cell2.textContent = datak.drive.folders.folder1.extension;
     cell3.textContent = datak.drive.folders.folder1.size;
-    cell4.textContent = datak.drive.folders.folder1.date;    
-
+    cell4.textContent = datak.drive.folders.folder1.date;
 
     const resizers = document.querySelectorAll('th .resizer, .middle .resizer');
     let startX, startWidth, resizerParent;
