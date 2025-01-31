@@ -1,0 +1,36 @@
+{
+    "drives": {
+        "C": {
+            "folders": [
+                {
+                    "name": "Documents",
+                    "extension": "docx",
+                    "size": "15MB",
+                    "date": "2025-01-30"
+                },
+                {
+                    "name": "Pictures",
+                    "extension": "jpg",
+                    "size": "200MB",
+                    "date": "2025-01-29"
+                }
+            ]
+        },
+        "D": {
+            "folders": [
+                {
+                    "name": "Music",
+                    "extension": "mp3",
+                    "size": "500MB",
+                    "date": "2025-01-28"
+                },
+                {
+                    "name": "Videos",
+                    "extension": "mp4",
+                    "size": "1GB",
+                    "date": "2025-01-27"
+                }
+            ]
+        }
+    }
+}
