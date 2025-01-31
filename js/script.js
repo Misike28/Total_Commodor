@@ -1,11 +1,14 @@
+var adatok;
+
 document.addEventListener('DOMContentLoaded', function () {
 
 
-    fetch('data.json')
+    fetch('./data.json')
         .then(response => response.json())
         .then(data => {
+            adatok=data
             function populateTable() {
-                const folders = data.drives.C.folders;
+                const folders = adatok.drives.C.folders;
                 const tableBody = document.getElementsByTagName('tbody')[0];
     
                 folders.forEach(folder => {
@@ -26,15 +29,14 @@ document.addEventListener('DOMContentLoaded', function () {
                     const dateCell = document.createElement('td');
                     dateCell.textContent = folder.date;
                     row.appendChild(dateCell);
-    
+                    row.ondblclick=function(){load(folder.name)}
+                    
                     tableBody.appendChild(row);
                 });
             }
             populateTable();
         })
         .catch(error => console.error('Error fetching JSON:', error));
-    
-
 
     
     const resizers = document.querySelectorAll('th .resizer, .middle .resizer');
@@ -86,8 +88,11 @@ function load(nev) {
     checkfiles();
 }
 function checkfiles() {
-
+    document.getElementById("tbody1").innerHTML=""
+    console.log(adatok);
+    
 }
+
 
 
 

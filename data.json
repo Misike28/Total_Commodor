@@ -4,13 +4,24 @@
             "folders": [
                 {
                     "name": "Documents",
-                    "extension": "docx",
+                    "extension": "fájlmappa",
                     "size": "15MB",
-                    "date": "2025-01-30"
+                    "date": "2025-01-30",
+                    "files": [{
+                        "name": "readme",
+                        "extension": "txt",
+                        "size": "3kb",
+                        "date": "2025-01-30"
+                    },{
+                        "name": "index",
+                        "extension": "html",
+                        "size": "15MB",
+                        "date": "2024-05-10"
+                    }]
                 },
                 {
                     "name": "Pictures",
-                    "extension": "jpg",
+                    "extension": "fájlmappa",
                     "size": "200MB",
                     "date": "2025-01-29"
                 }
