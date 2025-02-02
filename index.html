@@ -21,10 +21,10 @@
         <div class="paths">
 
             <div class="path">
-                <span class="dropdown-arrow" onclick="showDropdown()">&#9660;</span>
-                <div contenteditable="true" id="path">C:\</div>
+                <span class="dropdown-arrow" onclick="showDropdown('dropdown')">&#9660;</span>
+                <div contenteditable="true" id="path1">C:\</div>
                 <div class="dropdown-items" id="dropdown">
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path1')">
                         <div>
                             <p id="lemez">C</p>
                         </div>
@@ -32,7 +32,7 @@
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path1')">
                         <div>
                             <p id="lemez2">D</p>
                         </div>
@@ -48,10 +48,10 @@
             </div>
 
             <div class="path">
-                <span class="dropdown-arrow" onclick="showDropdown1()">&#9660;</span>
-                <div contenteditable="true" id="path">C:\</div>
+                <span class="dropdown-arrow" onclick="showDropdown('dropdown1')">&#9660;</span>
+                <div contenteditable="true" id="path2">C:\</div>
                 <div class="dropdown-items" id="dropdown1">
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path2')">
                         <div>
                             <p id="lemez">C</p>
                         </div>
@@ -59,7 +59,7 @@
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path2')">
                         <div>
                             <p id="lemez2">D</p>
                         </div>
@@ -74,7 +74,7 @@
 
         <div class="content">
 
-            <div class="window" id="win">
+            <div class="window" id="win1">
                 <table id="table1">
                     <thead>
                         <tr>
@@ -95,20 +95,20 @@
 
             </div>
 
-            <div class="window" id="win">
-                <table>
-                    <tr>
-                        <th class="name">Name<span class="resizer"></span></th>
-                        <th class="Ext">Ext<span class="resizer"></span></th>
-                        <th class="Size">Size<span class="resizer"></span></th>
-                        <th class="Date">Date</th>
-                    </tr>
-                    <tr>
-                        <td>[]</td>
-                        <td>.mp3</td>
-                        <td>5 mb</td>
-                        <td>2025.01.28 06:10</td>
-                    </tr>
+            <div class="window" id="win2">
+                <table id="table2">
+                    <thead>
+                        <tr>
+                            <th class="name">Name<span class="resizer"></span></th>
+                            <th class="Ext">Ext<span class="resizer"></span></th>
+                            <th class="Size">Size<span class="resizer"></span></th>
+                            <th class="Date">Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="tbody2">
+
+                    </tbody>
                 </table>
             </div>
 

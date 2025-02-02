@@ -63,6 +63,9 @@ table {
     margin: 5px;
     border-collapse: collapse;
 }
+tbody {
+    cursor: pointer;
+}
 
 th,td {
     text-align: left;

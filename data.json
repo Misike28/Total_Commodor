@@ -1,34 +1,71 @@
 {
     "drives": {
         "C": {
-            "folders": [
+            "files": [
                 {
                     "name": "Documents",
-                    "extension": "fájlmappa",
+                    "extension": "folder",
                     "size": "15MB",
                     "date": "2025-01-30",
-                    "files": [{
-                        "name": "readme",
-                        "extension": "txt",
-                        "size": "3kb",
-                        "date": "2025-01-30"
-                    },{
-                        "name": "index",
-                        "extension": "html",
-                        "size": "15MB",
-                        "date": "2024-05-10"
-                    }]
+                    "files": [
+                        {
+                            "name": "readme",
+                            "extension": "txt",
+                            "size": "3kb",
+                            "date": "2025-01-30"
+                        },
+                        {
+                            "name": "index",
+                            "extension": "html",
+                            "size": "15MB",
+                            "date": "2024-05-10"
+                        },
+                        {
+                            "name": "secret",
+                            "extension": "folder",
+                            "size": "69gb",
+                            "date": "2025-01-30",
+                            "files": [
+                                {
+                                    "name": "passwords",
+                                    "extension": "txt",
+                                    "size": "1kb",
+                                    "date": "2025-01-30"
+                                },
+                                {
+                                    "name": "keys",
+                                    "extension": "folder",
+                                    "size": "1kb",
+                                    "date": "2025-01-30",
+                                    "files": [
+                                        {
+                                            "name": "house keys",
+                                            "extension": "txt",
+                                            "size": "1kb",
+                                            "date": "2025-01-30"
+                                        },
+                                        {
+                                            "name": "car keys",
+                                            "extension": "txt",
+                                            "size": "1kb",
+                                            "date": "2025-01-30"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "name": "Pictures",
-                    "extension": "fájlmappa",
+                    "extension": "folder",
                     "size": "200MB",
                     "date": "2025-01-29"
                 }
             ]
         },
         "D": {
-            "folders": [
+            "files": [
                 {
                     "name": "Music",
                     "extension": "mp3",
@@ -37,9 +74,57 @@
                 },
                 {
                     "name": "Videos",
-                    "extension": "mp4",
+                    "extension": "folder",
                     "size": "1GB",
-                    "date": "2025-01-27"
+                    "date": "2025-01-27",
+                    "files": [
+                        {
+                            "name": "cat video",
+                            "extension": "mp4",
+                            "size": "56MB",
+                            "date": "2025-01-30"
+                        },
+                        {
+                            "name": "illegal movie",
+                            "extension": "mp4",
+                            "size": "34gb",
+                            "date": "2024-05-10"
+                        },
+                        {
+                            "name": "secret videos",
+                            "extension": "folder",
+                            "size": "69gb",
+                            "date": "2025-01-30",
+                            "files": [
+                                {
+                                    "name": "ultra secret",
+                                    "extension": "mp4",
+                                    "size": "1kb",
+                                    "date": "2025-01-30"
+                                },
+                                {
+                                    "name": "not so secret",
+                                    "extension": "folder",
+                                    "size": "1kb",
+                                    "date": "2025-01-30",
+                                    "files": [
+                                        {
+                                            "name": "funny video",
+                                            "extension": "mp4",
+                                            "size": "1kb",
+                                            "date": "2025-01-30"
+                                        },
+                                        {
+                                            "name": "boring video",
+                                            "extension": "mp4",
+                                            "size": "1kb",
+                                            "date": "2025-01-30"
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         }
