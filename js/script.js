@@ -81,13 +81,11 @@ function loadData(tbodyId, pathId) {
   let folders = adatok.drives[driv].files;
   let currentFolder;
 
+
   for (let i = 0; i < pathArray.length; i++) {
     currentFolder = folders.find((folder) => folder.name === pathArray[i]);
     if (currentFolder && currentFolder.files) {
       folders = currentFolder.files;
-    } else {
-      folders = [];
-      break;
     }
   }
 
@@ -123,3 +121,17 @@ function loadData(tbodyId, pathId) {
       tableBody.appendChild(row);
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  const editableDiv = [document.getElementById('path1'), document.getElementById('path2')]
+
+  editableDiv.forEach((div) => {
+    div.addEventListener('keypress', function(event) {
+      if (event.key == "Enter")
+      {
+        loadData( div.id === "path1" ? "tbody1" : "tbody2", div.id === "path1" ? "path1" : "path2");
+      }
+  });
+});
+});
+
