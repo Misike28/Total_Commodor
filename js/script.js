@@ -78,9 +78,7 @@ function loadData(tbodyId, pathId) {
     path = "C"; // TODO: ez ne legyen hard code olva hanem az alapján hogy mi volt az utoljára kiválaszott drive
     lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
   }
-  if (path.endsWith(":\\")) {
-    path = path.slice(0, -1);
-  }
+
   const driv = path[0];
   const tableBody = document.getElementById(tbodyId);
   tableBody.innerHTML = "";
@@ -99,6 +97,20 @@ function loadData(tbodyId, pathId) {
   if (pathArray.length === 0) {
     currentFolder = { files: folders };
   }
+
+  if (pathArray.length > 0) {
+    const row = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    nameCell.textContent = "←";
+    row.appendChild(nameCell);
+    tableBody.appendChild(row);
+
+    row.ondblclick = function () {
+      let newPath = path.split("\\").filter(Boolean).slice(0, -1).join("\\");
+      document.getElementById(pathId).innerHTML = newPath + "\\"; 
+      loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
+    };
+  };
 
   currentFolder.files.forEach((file) => {
     const row = document.createElement("tr");
@@ -190,9 +202,6 @@ function createFolder(pathId) {
     alert("Path is empty!")
     path = "C"; // TODO: ez ne legyen hard code olva hanem az alapján hogy mi volt az utoljára kiválaszott drive
     lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
-  }
-  if (path.endsWith(":\\")) {
-    path = path.slice(0, -1);
   }
   const driv = path[0];
   const pathArray = path.split("\\").filter(Boolean).slice(1);
