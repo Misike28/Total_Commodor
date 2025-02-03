@@ -1,6 +1,6 @@
 var adatok;
 
-// Data fetching and table population
+// Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
     .then((response) => response.json())
@@ -59,13 +59,13 @@ function showDropdown(dropdownId) {
 function lemezchange(lemez, pathId, dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   dropdown.classList.toggle("show");
-  document.getElementById(pathId).innerHTML = lemez + ":\\";
+  document.getElementById(pathId).innerHTML = lemez + ":\\"; 
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
 function load(folderName, pathId) {
   let path = document.getElementById(pathId).innerHTML;
-  document.getElementById(pathId).innerHTML = path + folderName + "\\";
+  document.getElementById(pathId).innerHTML = path + folderName + "\\"; 
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // rightclick event handler
+  // right click event handler
   windows.forEach((window) => {
     window.addEventListener('contextmenu', function (event) {
       event.preventDefault();
@@ -151,7 +151,16 @@ document.addEventListener('DOMContentLoaded', function () {
       contextMenu.style.display = 'block';
       contextMenu.style.left = event.pageX + 'px';
       contextMenu.style.top = event.pageY + 'px';
-      createFolder(window.id === "win1" ? "path1" : "path2")
+
+      let createFolderMen = document.getElementById('createFolder');
+      createFolderMen.onclick = function () {
+        createFolderMenu(event.pageX, event.pageY);
+      };
+
+      let createFolderS = document.getElementById('create');
+      createFolderS.onclick = function () {
+        createFolder(window.id === "win1" ? "path1" : "path2");
+      };
     });
 
     document.addEventListener('click', function () {
@@ -161,16 +170,35 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+function createFolderMenu(posX, posY) {
+  let createFolderMenu = document.getElementById('folderCreate');
+  createFolderMenu.style.display = 'block';
+  createFolderMenu.style.left = posX + 'px';
+  createFolderMenu.style.top = posY + 'px';
+
+}
+
+function closeFolderMenu() {
+  let createFolderMenu = document.getElementById('folderCreate');
+  createFolderMenu.style.display = 'none';
+}
+
 function createFolder(pathId) {
+  let folderName = document.getElementById('folderName').value;
   let path = document.getElementById(pathId).innerHTML;
+  if (path == "<br>") {
+    alert("Path is empty!")
+    path = "C"; // TODO: ez ne legyen hard code olva hanem az alapján hogy mi volt az utoljára kiválaszott drive
+    lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
+  }
   if (path.endsWith(":\\")) {
     path = path.slice(0, -1);
   }
-
   const driv = path[0];
   const pathArray = path.split("\\").filter(Boolean).slice(1);
   let folders = adatok.drives[driv].files;
   let currentFolder;
+
 
   for (let i = 0; i < pathArray.length; i++) {
     currentFolder = folders.find((folder) => folder.name === pathArray[i]);
@@ -179,11 +207,10 @@ function createFolder(pathId) {
     }
   }
 
-  adatok[folders].files = [
-    {
-      "name": "csira",
-    }
-  ];
-  console.log(folders)
-  console.log(path)
+  if (pathArray.length === 0) {
+    currentFolder = { files: folders };
+  }
+
+  folders.push({ name: folderName, extension: "folder", size: Math.floor(Math.random() * 1000) + "mb", date: new Date().toLocaleDateString() });
+  loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }

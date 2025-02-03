@@ -162,3 +162,11 @@ th .resizer {
     display: none;
     z-index: 99;
 }
+
+.folderCreate{
+    display: none;
+    position: absolute;
+    z-index: 99;
+    width: 150px;
+    height: 100px;
+}
