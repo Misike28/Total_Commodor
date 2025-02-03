@@ -24,7 +24,7 @@
                 <span class="dropdown-arrow" onclick="showDropdown('dropdown')">&#9660;</span>
                 <div contenteditable="true" id="path1">C:\</div>
                 <div class="dropdown-items" id="dropdown">
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path1')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path1', 'dropdown')">
                         <div>
                             <p id="lemez">C</p>
                         </div>
@@ -32,7 +32,7 @@
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path1')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path1' , 'dropdown')">
                         <div>
                             <p id="lemez2">D</p>
                         </div>
@@ -51,7 +51,7 @@
                 <span class="dropdown-arrow" onclick="showDropdown('dropdown1')">&#9660;</span>
                 <div contenteditable="true" id="path2">C:\</div>
                 <div class="dropdown-items" id="dropdown1">
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML,'path2')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path2' , 'dropdown1')">
                         <div>
                             <p id="lemez">C</p>
                         </div>
@@ -59,7 +59,7 @@
                             <p>C neve</p>
                         </div>
                     </div>
-                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML,'path2')">
+                    <div class="item" onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path2' , 'dropdown1')">
                         <div>
                             <p id="lemez2">D</p>
                         </div>
@@ -112,6 +112,17 @@
                 </table>
             </div>
 
+        </div>
+    </div>
+
+    <div class="options" id="options">
+        <div>
+            <div class="item">
+                <p>Create Folder</p>
+            </div>
+            <div class="item">
+                <P></P>
+            </div>
         </div>
     </div>
 

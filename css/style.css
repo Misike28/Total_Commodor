@@ -127,7 +127,7 @@ th .resizer {
 }
 
 .show {
-    display: block;
+    display: block !important;
 }
 
 .item {
@@ -152,4 +152,13 @@ th .resizer {
     outline: 1px solid grey;
     text-align: left;
     width: 100%;
+}
+
+.options {
+    width: 150px;
+    height: 100px;
+    background-color: rgb(166, 162, 162);
+    position: absolute;
+    display: none;
+    z-index: 99;
 }
