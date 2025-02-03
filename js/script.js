@@ -71,6 +71,7 @@ function load(folderName, pathId) {
 // Data loading
 function loadData(tbodyId, pathId) {
   let path = document.getElementById(pathId).innerHTML;
+  console.log(path)
   if (path.endsWith(":\\")) {
     path = path.slice(0, -1); 
   }
@@ -129,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     div.addEventListener('keypress', function(event) {
       if (event.key == "Enter")
       {
+        event.preventDefault();
         loadData( div.id === "path1" ? "tbody1" : "tbody2", div.id === "path1" ? "path1" : "path2");
       }
   });
