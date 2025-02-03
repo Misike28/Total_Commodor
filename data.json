@@ -5,7 +5,7 @@
                 {
                     "name": "Documents",
                     "extension": "folder",
-                    "size": "15MB",
+                    "size": "",
                     "date": "2025-01-30",
                     "files": [
                         {
@@ -23,7 +23,7 @@
                         {
                             "name": "secret",
                             "extension": "folder",
-                            "size": "69gb",
+                            "size": "",
                             "date": "2025-01-30",
                             "files": [
                                 {
@@ -35,7 +35,7 @@
                                 {
                                     "name": "keys",
                                     "extension": "folder",
-                                    "size": "1kb",
+                                    "size": "",
                                     "date": "2025-01-30",
                                     "files": [
                                         {
@@ -59,7 +59,7 @@
                 {
                     "name": "Pictures",
                     "extension": "folder",
-                    "size": "200MB",
+                    "size": "",
                     "date": "2025-01-29"
                 }
             ]
@@ -75,7 +75,7 @@
                 {
                     "name": "Videos",
                     "extension": "folder",
-                    "size": "1GB",
+                    "size": "",
                     "date": "2025-01-27",
                     "files": [
                         {
@@ -93,7 +93,7 @@
                         {
                             "name": "secret videos",
                             "extension": "folder",
-                            "size": "69gb",
+                            "size": "",
                             "date": "2025-01-30",
                             "files": [
                                 {
@@ -105,7 +105,7 @@
                                 {
                                     "name": "not so secret",
                                     "extension": "folder",
-                                    "size": "1kb",
+                                    "size": "",
                                     "date": "2025-01-30",
                                     "files": [
                                         {

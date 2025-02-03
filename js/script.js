@@ -75,7 +75,7 @@ function loadData(tbodyId, pathId) {
   let path = document.getElementById(pathId).innerHTML;
   if (path == "<br>") {
     alert("Path is empty!")
-    path = "C"; // TODO: ez ne legyen hard code olva hanem az alapján hogy mi volt az utoljára kiválaszott drive
+    path = "C";
     lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
   }
 
@@ -159,22 +159,41 @@ document.addEventListener('DOMContentLoaded', function () {
   windows.forEach((window) => {
     window.addEventListener('contextmenu', function (event) {
       event.preventDefault();
+
+      // File creation menu
       var contextMenu = document.getElementById('options');
       contextMenu.style.display = 'block';
       contextMenu.style.left = event.pageX + 'px';
       contextMenu.style.top = event.pageY + 'px';
 
+      // Folder creation menu
       let createFolderMen = document.getElementById('createFolder');
       createFolderMen.onclick = function () {
-        createFolderMenu(event.pageX, event.pageY);
+        createMenu(event.pageX, event.pageY, 'folderCreate');
       };
 
+
+      // File creation menu
+      let createFileMen = document.getElementById('createFile');
+      createFileMen.onclick = function () {
+        createMenu(event.pageX, event.pageY, 'fileCreate');
+      };
+
+      // folder creation
       let createFolderS = document.getElementById('create');
       createFolderS.onclick = function () {
-        createFolder(window.id === "win1" ? "path1" : "path2");
+        createAnyFile(window.id === "win1" ? "path1" : "path2", "folder");
+      };
+
+      // file creation
+      let createFileS = document.getElementById('createFileButton');
+      createFileS.onclick = function () {
+        let extension = document.getElementById('extension').value;
+        createAnyFile(window.id === "win1" ? "path1" : "path2", extension);
       };
     });
 
+    // Close menu
     document.addEventListener('click', function () {
       var contextMenu = document.getElementById('options');
       contextMenu.style.display = 'none';
@@ -182,25 +201,27 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-function createFolderMenu(posX, posY) {
-  let createFolderMenu = document.getElementById('folderCreate');
-  createFolderMenu.style.display = 'block';
-  createFolderMenu.style.left = posX + 'px';
-  createFolderMenu.style.top = posY + 'px';
-
+//show and hide Create menu
+function createMenu(posX, posY, menuId) {
+  let createMenu = document.getElementById(menuId);
+  createMenu.style.display = 'block';
+  createMenu.style.left = posX + 'px';
+  createMenu.style.top = posY + 'px';
 }
 
-function closeFolderMenu() {
-  let createFolderMenu = document.getElementById('folderCreate');
+function closeMenu(menuId) {
+  let createFolderMenu = document.getElementById(menuId);
   createFolderMenu.style.display = 'none';
 }
 
-function createFolder(pathId) {
-  let folderName = document.getElementById('folderName').value;
+
+// Create file or folder
+function createAnyFile(pathId, extension) {
+  let folderName = extension === "folder" ? document.getElementById('folderName').value : document.getElementById('fileName').value;
   let path = document.getElementById(pathId).innerHTML;
   if (path == "<br>") {
     alert("Path is empty!")
-    path = "C"; // TODO: ez ne legyen hard code olva hanem az alapján hogy mi volt az utoljára kiválaszott drive
+    path = "C";
     lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
   }
   const driv = path[0];
@@ -220,6 +241,8 @@ function createFolder(pathId) {
     currentFolder = { files: folders };
   }
 
-  folders.push({ name: folderName, extension: "folder", size: Math.floor(Math.random() * 1000) + "mb", date: new Date().toLocaleDateString() });
+  let fileSize = extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
+  folders.push({ name: folderName, extension: extension, size: fileSize, date: new Date().toLocaleDateString() });
+
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
