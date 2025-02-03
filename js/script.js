@@ -71,7 +71,10 @@ function load(folderName, pathId) {
 // Data loading
 function loadData(tbodyId, pathId) {
   let path = document.getElementById(pathId).innerHTML;
-  console.log(path)
+  if (path == "<br>") {
+    alert("anyukadat szeretem")
+    path = "C:\\";
+  }
   if (path.endsWith(":\\")) {
     path = path.slice(0, -1); 
   }
