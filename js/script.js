@@ -59,13 +59,13 @@ function showDropdown(dropdownId) {
 function lemezchange(lemez, pathId, dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   dropdown.classList.toggle("show");
-  document.getElementById(pathId).innerHTML = lemez + ":\\"; 
+  document.getElementById(pathId).innerHTML = lemez + ":\\";
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
 function load(folderName, pathId) {
   let path = document.getElementById(pathId).innerHTML;
-  document.getElementById(pathId).innerHTML = path + folderName + "\\"; 
+  document.getElementById(pathId).innerHTML = path + folderName + "\\";
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
@@ -107,38 +107,40 @@ function loadData(tbodyId, pathId) {
 
     row.ondblclick = function () {
       let newPath = path.split("\\").filter(Boolean).slice(0, -1).join("\\");
-      document.getElementById(pathId).innerHTML = newPath + "\\"; 
+      document.getElementById(pathId).innerHTML = newPath + "\\";
       loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
     };
   };
 
-  currentFolder.files.forEach((file) => {
-    const row = document.createElement("tr");
+  if (currentFolder.files) {
+    currentFolder.files.forEach((file) => {
+      const row = document.createElement("tr");
 
-    const nameCell = document.createElement("td");
-    nameCell.textContent = file.name;
-    row.appendChild(nameCell);
+      const nameCell = document.createElement("td");
+      nameCell.textContent = file.name;
+      row.appendChild(nameCell);
 
-    const extensionCell = document.createElement("td");
-    extensionCell.textContent = file.extension;
-    row.appendChild(extensionCell);
+      const extensionCell = document.createElement("td");
+      extensionCell.textContent = file.extension;
+      row.appendChild(extensionCell);
 
-    const sizeCell = document.createElement("td");
-    sizeCell.textContent = file.size;
-    row.appendChild(sizeCell);
+      const sizeCell = document.createElement("td");
+      sizeCell.textContent = file.size;
+      row.appendChild(sizeCell);
 
-    const dateCell = document.createElement("td");
-    dateCell.textContent = file.date;
-    row.appendChild(dateCell);
+      const dateCell = document.createElement("td");
+      dateCell.textContent = file.date;
+      row.appendChild(dateCell);
 
-    row.ondblclick = function () {
-      if (file.extension === "folder") {
-        load(file.name, pathId);
-      }
-    };
+      row.ondblclick = function () {
+        if (file.extension === "folder") {
+          load(file.name, pathId);
+        }
+      };
 
-    tableBody.appendChild(row);
-  });
+      tableBody.appendChild(row);
+    });
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -182,6 +184,11 @@ document.addEventListener('DOMContentLoaded', function () {
       // folder creation
       let createFolderS = document.getElementById('create');
       createFolderS.onclick = function () {
+        if (document.getElementById('folderName').value === "")
+        {
+          alert('A nev nem lehet ures')
+          return
+        }
         createAnyFile(window.id === "win1" ? "path1" : "path2", "folder");
       };
 
@@ -189,6 +196,12 @@ document.addEventListener('DOMContentLoaded', function () {
       let createFileS = document.getElementById('createFileButton');
       createFileS.onclick = function () {
         let extension = document.getElementById('extension').value;
+        let text = document.getElementById('fileName').value;
+        if (text === "" && extension === "")
+        {
+          alert('Toltsed mar ki a dolgokat pls')
+          return
+        }
         createAnyFile(window.id === "win1" ? "path1" : "path2", extension);
       };
     });
@@ -219,13 +232,11 @@ function closeMenu(menuId) {
 function createAnyFile(pathId, extension) {
   let folderName = extension === "folder" ? document.getElementById('folderName').value : document.getElementById('fileName').value;
   let path = document.getElementById(pathId).innerHTML;
-  if (path == "<br>") {
-    alert("Path is empty!")
-    path = "C";
-    lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1")
-  }
+  console.log(path)
+
   const driv = path[0];
   const pathArray = path.split("\\").filter(Boolean).slice(1);
+  console.log(pathArray)
   let folders = adatok.drives[driv].files;
   let currentFolder;
 
@@ -241,8 +252,9 @@ function createAnyFile(pathId, extension) {
     currentFolder = { files: folders };
   }
 
+  console.log(currentFolder)
   let fileSize = extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-  folders.push({ name: folderName, extension: extension, size: fileSize, date: new Date().toLocaleDateString() });
+  extension === "folder" ? folders.push({ name: folderName, extension: extension, size: fileSize, date: new Date().toLocaleDateString(), files: []}) :   folders.push({ name: folderName, extension: extension, size: fileSize, date: new Date().toLocaleDateString()});
 
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
