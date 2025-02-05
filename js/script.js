@@ -1,5 +1,6 @@
 var adatok;
-
+var lastlemez1 = "C";
+var lastlemez2 = "C";
 // Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
@@ -59,6 +60,13 @@ function lemezchange(lemez, pathId, dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   dropdown.classList.toggle("show");
   document.getElementById(pathId).innerHTML = lemez + ":\\";
+  if(pathId=="path1"){ 
+    lastlemez1 = lemez;
+  }
+  else{
+    lastlemez2 = lemez;
+  }
+
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
@@ -73,7 +81,7 @@ function loadData(tbodyId, pathId) {
   let path = document.getElementById(pathId).innerHTML;
   if (path == "<br>") {
     alert("Path is empty!");
-    path = "C";
+    path = lastlemez;
     lemezchange(path, pathId, pathId === "path1" ? "dropdown" : "dropdown1");
   }
 
@@ -98,11 +106,11 @@ function loadData(tbodyId, pathId) {
   if (pathArray.length > 0) {
     const row = document.createElement("tr");
     const nameCell = document.createElement("td");
-    nameCell.textContent = "←";
+    nameCell.innerHTML = "<i class='fa-solid fa-arrow-left'></i>";
     row.appendChild(nameCell);
     tableBody.appendChild(row);
 
-    row.ondblclick = function () {
+    row.onclick = function () {
       let newPath = path.split("\\").filter(Boolean).slice(0, -1).join("\\");
       document.getElementById(pathId).innerHTML = newPath + "\\";
       loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
@@ -114,7 +122,30 @@ function loadData(tbodyId, pathId) {
       const row = document.createElement("tr");
 
       const nameCell = document.createElement("td");
-      nameCell.textContent = file.name;
+      if(file.extension=="folder"){
+        nameCell.innerHTML ="<i class='fas fa-folder'></i> " + file.name;
+      }
+      else if(file.extension=="png"){
+        nameCell.innerHTML ="<i class='fa-solid fa-image'></i> " + file.name;
+      }
+      else if(file.extension=="mp4"){
+        nameCell.innerHTML ="<i class='fa-solid fa-video'></i> " + file.name;
+      }
+      else if(file.extension=="mp3"){
+        nameCell.innerHTML ="<i class='fa-solid fa-music'></i> " + file.name;
+      }
+      else if(file.extension=="txt"){
+        nameCell.innerHTML ="<i class='fas fa-file-alt'></i> " + file.name;
+      }
+      else if(file.extension=="html"){
+        nameCell.innerHTML ="<i class='fa-solid fa-globe'></i> " + file.name;
+      }
+      else{
+        nameCell.innerHTML = file.name;
+
+      }
+      
+      
       row.appendChild(nameCell);
 
       const extensionCell = document.createElement("td");
@@ -183,15 +214,35 @@ document.addEventListener("DOMContentLoaded", function () {
   // path keyboard event handler
   editableDiv.forEach((div) => {
     div.addEventListener("keypress", function (event) {
-      if (event.key == "Enter") {
+        if (event.key == "Enter") {
+            try {
         event.preventDefault();
         loadData(
           div.id === "path1" ? "tbody1" : "tbody2",
           div.id === "path1" ? "path1" : "path2"
         );
+    }
+    catch{
+        defaultdriver(div.id === "path1" ? "path1" : "path2")
+        console.log(div.id)
+        loadData(
+            div.id === "path1" ? "tbody1" : "tbody2",
+            div.id === "path1" ? "path1" : "path2"
+          );
+    }
       }
     });
   });
+function defaultdriver(path){
+    if(path=="path1"){
+        document.getElementById(path).innerHTML=lastlemez1+":\\"
+    }
+    else{
+        document.getElementById(path).innerHTML=lastlemez2+":\\"
+    }
+
+
+}
 
   // right click event handler
   windows.forEach((window) => {
@@ -270,6 +321,7 @@ function createAnyFile(pathId, extension) {
 
   const driv = path[0];
   const pathArray = path.split("\\").filter(Boolean).slice(1);
+
 
   let folders = adatok.drives[driv].files;
   let currentFolder;
@@ -374,6 +426,6 @@ function deleteFile(fileName, pathId) {
     
     loadData("tbody1", "path1");
     loadData("tbody2", "path2");
-  /* nesze */
+
 }
 
