@@ -1,0 +1,68 @@
+body{
+    background-color: #030637;
+    color: #a30579;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.application{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: #720455;
+    height: 100%;
+    border-radius: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.application-head{
+    display: flex;
+    flex-direction: row;
+}
+
+.application-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.application-window{
+    width: 60%;
+    background-color: #3C0753;
+    height: 900px;
+    padding: 1%;
+}
+
+.slider{
+    min-width: 20px;
+}
+
+tr{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.1s ease-in;
+}
+
+table{
+    width: 100%;
+}
+
+.file:hover{
+    background-color: #a61c82;
+    color: #6e1656;
+}
+
+.window-left{
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px ;
+}
+
+.window-right{
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px ;
+}

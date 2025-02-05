@@ -1,0 +1,138 @@
+body{
+    background-color: #76ABAE;
+    color: #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.application{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: #222831;
+    height: 100%;
+    border-radius: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.application-header{
+    display: flex;
+    flex-direction: row;
+}
+
+.title-cont{
+    width: 50%;
+}
+
+.button-cont{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+.application-main{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.application-window{
+    width: 60%;
+    background-color: #31363F;
+    height: 900px;
+    padding: 1%;
+}
+
+.slider{
+    min-width: 20px;
+}
+
+tr{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.1s linear;
+}
+
+table{
+    width: 100%;
+}
+
+.file:hover{
+    background-color: #8e9b9c;
+    color: white;
+}
+
+.window-left{
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px ;
+}
+
+.window-right{
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 25px ;
+}
+
+
+/* switch próba */
+/* 
+.switch{
+    width: 150px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+.switch:hover .switch-slider{
+    margin-left: 80%;
+}
+
+.switch-slider{
+    min-width: 15px;
+    min-height: 15px;
+    background-color: black;
+    border-radius: 50%;
+    margin: 2px;
+    transition: margin-left 0.2s linear;
+} */
+
+.switch{
+    width: 150px;
+    height: 60px;
+    background-color: red;
+}
+
+
+.checker{
+   visibility: hidden;
+}
+
+.switch-slider{
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    margin-left: 0;
+    transition: all 0.2s;
+}
+
+.checker:checked + .switch-slider{
+    margin-left: 30px;
+}
+  
+
+
+
+  /* 
+  https://www.w3schools.com/HOWTO/howto_css_switch.asp
+  https://www.w3schools.com/css/css3_animations.asp
+  */

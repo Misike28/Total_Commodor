@@ -12,13 +12,15 @@
                             "name": "readme",
                             "extension": "txt",
                             "size": "3kb",
-                            "date": "2025-01-23"
+                            "date": "2025-01-23",
+                            "content": "This is a readme file"
                         },
                         {
                             "name": "index",
                             "extension": "html",
                             "size": "15MB",
-                            "date": "2024-05-10"
+                            "date": "2024-05-10",
+                            "content": "<html><head></head><body></body></html>"
                         },
                         {
                             "name": "secret",
@@ -30,7 +32,8 @@
                                     "name": "passwords",
                                     "extension": "txt",
                                     "size": "1kb",
-                                    "date": "2025-01-30"
+                                    "date": "2025-01-30",
+                                    "content": "123456"
                                 },
                                 {
                                     "name": "keys",
@@ -42,13 +45,15 @@
                                             "name": "house keys",
                                             "extension": "txt",
                                             "size": "1kb",
-                                            "date": "2025-01-30"
+                                            "date": "2025-01-30",
+                                            "content": "I lost them"
                                         },
                                         {
                                             "name": "car keys",
                                             "extension": "txt",
                                             "size": "1kb",
-                                            "date": "2025-01-30"
+                                            "date": "2025-01-30",
+                                            "content": "I lost them"
                                         }
                                     ]
                                 }
@@ -71,7 +76,8 @@
                     "name": "Music",
                     "extension": "mp3",
                     "size": "500MB",
-                    "date": "2025-01-28"
+                    "date": "2025-01-28",
+                    "content": ""
                 },
                 {
                     "name": "Videos",
@@ -83,13 +89,15 @@
                             "name": "cat video",
                             "extension": "mp4",
                             "size": "56MB",
-                            "date": "2025-01-30"
+                            "date": "2025-01-30",
+                            "content": ""
                         },
                         {
                             "name": "illegal movie",
                             "extension": "mp4",
                             "size": "34gb",
-                            "date": "2024-05-10"
+                            "date": "2024-05-10",
+                            "content": ""
                         },
                         {
                             "name": "secret videos",
@@ -101,7 +109,8 @@
                                     "name": "ultra secret",
                                     "extension": "mp4",
                                     "size": "1kb",
-                                    "date": "2025-01-30"
+                                    "date": "2025-01-30",
+                                    "content": ""
                                 },
                                 {
                                     "name": "not so secret",
@@ -113,13 +122,15 @@
                                             "name": "funny image",
                                             "extension": "png",
                                             "size": "1kb",
-                                            "date": "2025-01-30"
+                                            "date": "2025-01-30",
+                                            "content": "img/asd.jpg"
                                         },
                                         {
                                             "name": "boring video",
                                             "extension": "mp4",
                                             "size": "1kb",
-                                            "date": "2025-01-30"
+                                            "date": "2025-01-30",
+                                            "content": ""
                                         }
                                     ]
                                 }
