@@ -374,6 +374,6 @@ function deleteFile(fileName, pathId) {
     
     loadData("tbody1", "path1");
     loadData("tbody2", "path2");
-
+  /* nesze */
 }
 
