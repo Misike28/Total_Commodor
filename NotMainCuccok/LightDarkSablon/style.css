@@ -7,8 +7,6 @@ body{
     transition: background-color 0.2s linear;
 }
 
-
-
 .application{
     width: 90%;
     display: flex;
@@ -48,11 +46,15 @@ body{
 }
 
 .application-window{
-    width: 60%;
+    width: 100%;
     background-color: #CDC1FF;
     height: 900px;
     padding: 1%;
     transition: all 0.2s linear;
+}
+
+.main-left, .main-right{
+    width: 90%;
 }
 
 .slider{
@@ -70,11 +72,6 @@ table{
     width: 100%;
 }
 
-.file:hover{
-    background-color: #8e9b9c;
-    color: white;
-}
-
 .window-left{
     border-bottom-left-radius: 25px;
     border-top-left-radius: 25px ;
@@ -85,7 +82,77 @@ table{
     border-top-right-radius: 25px ;
 }
 
-/* switch */
+/* path */ 
+
+.path-container{
+    width: 100%;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: row;
+}
+
+.path{
+
+}
+
+/* path -> dropdown-arrow */
+
+.dropdown-arrow-label{
+    margin: 0;
+    padding: 0;
+}
+
+.dropdown-arrow{
+    margin: 0;
+    padding: 0;
+    transform: rotate(-90deg);
+    transition: transform 0.2s linear;
+}
+
+/* path -> dropdown */
+
+.dropdown-list{
+    display: none !important;
+    position: absolute;
+    border: 1px solid red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    background-color: #CDC1FF;
+    margin-top: 20px;
+    width: 150px;
+}
+
+.path-container:has(input[id="ArrowCheckLeft"]:checked) .dropdown-list{
+    display: block !important;
+}
+
+.path-container:has(input[id="ArrowCheckLeft"]:checked) .dropdown-arrow{
+    transform: rotate(0);
+}
+
+.dropdown-item{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    width: 100%;
+    text-align: center;
+}
+
+.dropdown-item:hover{
+    background-color: #8e9b9c;
+    color: white;
+}
+
+/* file style */
+
+.file:hover{
+    background-color: #8e9b9c;
+    color: white;
+}
+
+/* Theme switch */
 
 .switch:has(input[type=checkbox]:checked){
     width: 150px;
@@ -104,11 +171,11 @@ table{
 
 
 .checker{
-   visibility: hidden;
+   display: none;
 }
 
 .switch-slider{
-    margin-top: -15px;
+    margin-top: 5px;
     width: 50px;
     height: 80%;
     background-color: #A594F9;
@@ -124,7 +191,7 @@ table{
     display: none;
 }
 
-.checker:checked + .switch-slider .hold{
+input[id="ThemeSwitch"]:checked + .switch-slider .hold{
     display: block;
 }
 
@@ -132,11 +199,11 @@ table{
     display: block;
 }
 
-.checker:checked + .switch-slider .nap{
+input[id="ThemeSwitch"]:checked + .switch-slider .nap{
     display: none;
 }
 
-.checker:checked + .switch-slider{
+input[id="ThemeSwitch"]:checked + .switch-slider{
     margin-left: 60%;
     background-color: #222831;
 }
