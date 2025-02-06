@@ -86,6 +86,7 @@ function getCurrentFolder(pathId) {
   let currentFolder = { files: adatok.drives[driv].files };
 
   for (let i = 0; i < pathArray.length; i++) {
+<<<<<<< Updated upstream
     const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
     if (found && found.files) {
       currentFolder = found;
@@ -93,6 +94,23 @@ function getCurrentFolder(pathId) {
   }
 
 
+=======
+    let talal = false;
+      const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
+      if (found && found.files) {
+          currentFolder = found;
+          talal = true;
+      }
+      if(talal==false){
+        defaultdriver(pathId === "path1" ? "path1" : "path2")
+        loadData(
+          pathId === "path1" ? "tbody1" : "tbody2",
+          pathId === "path1" ? "path1" : "path2"
+        );
+      }
+
+    }
+>>>>>>> Stashed changes
   return currentFolder;
 }
 
@@ -133,7 +151,7 @@ function loadData(tbodyId, pathId) {
         nameCell.innerHTML = "<i class='fas fa-folder'></i> " + file.name;
       }
       else if (file.extension == "png") {
-        nameCell.innerHTML = "<i class='fa-solid fa-image'></i> " + file.name;
+        nameCell.innerHTML = "<i class='fa-solid -image'></i> " + "<a href='img/asd.jpg'>"+file.name +"</a>";
       }
       else if (file.extension == "mp4") {
         nameCell.innerHTML = "<i class='fa-solid fa-video'></i> " + file.name;
@@ -160,7 +178,27 @@ function loadData(tbodyId, pathId) {
       row.appendChild(extensionCell);
 
       const sizeCell = document.createElement("td");
-      sizeCell.textContent = file.size;
+      if(file.extension=="txt" || file.extension=="html"){
+        let hossz = file.content.length;
+        let meret = Math.round(hossz/1024*10)/10;
+        console.log(meret)
+        let meretbyte = "KB"; 
+        if(meret>1000){
+          meretbyte="MB"
+          meret= meret/1000
+          Math.round(meret*10)/10
+        }
+        else if(hossz<100){
+          console.log("hal")
+          meretbyte = "B"
+          meret = hossz;
+          Math.round(meret*10)/10
+        }
+        sizeCell.textContent = meret + meretbyte;
+      }
+      else{
+        sizeCell.textContent = file.size;
+      }
       row.appendChild(sizeCell);
 
       const dateCell = document.createElement("td");
@@ -250,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         catch {
           defaultdriver(div.id === "path1" ? "path1" : "path2")
-          console.log(div.id)
           loadData(
             div.id === "path1" ? "tbody1" : "tbody2",
             div.id === "path1" ? "path1" : "path2"
