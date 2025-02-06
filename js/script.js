@@ -82,16 +82,17 @@ function getCurrentFolder(pathId) {
   let path = document.getElementById(pathId).innerHTML;
   const driv = path[0];
   const pathArray = path.split("\\").filter(Boolean).slice(1);
-  
+
   let currentFolder = { files: adatok.drives[driv].files };
-  
+
   for (let i = 0; i < pathArray.length; i++) {
-      const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
-      if (found && found.files) {
-          currentFolder = found;
-      }
+    const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
+    if (found && found.files) {
+      currentFolder = found;
+    }
   }
-  
+
+
   return currentFolder;
 }
 
@@ -168,25 +169,26 @@ function loadData(tbodyId, pathId) {
 
       row.ondblclick = function () {
         if (file.extension === "folder") {
-            load(file.name, pathId);
+          load(file.name, pathId);
         }
         else if (file.extension === "txt" || file.extension === "html") {
-            createMenu("50%", "50%", "showContent");
-            showContent(file.content, file.name, file.extension);
+          createMenu("50%", "50%", "showContent");
+          showContent(file.content, file.name, file.extension);
 
-            let saveButton = document.getElementById("saveButton");
-            if (saveButton) {
-                saveButton.onclick = function () {
-                    modifyTxtContent(file.name, pathId);
-                    closeMenu("showContent");
-                };
-            }
+          let saveButton = document.getElementById("saveButton");
+          if (saveButton) {
+            saveButton.onclick = function () {
+              modifyTxtContent(file.name, pathId);
+              closeMenu("showContent");
+            };
+          }
         }
         else if (file.extension === "mp4" || file.extension === "mp3") {
-          alert("Idk how to play this file" );
+          alert("Idk how to play this file");
         }
-        else if (file.extension === "png") {
-          alert("Kép megnyitása: " + file.content);
+        else if (file.extension === "png" || file.extension === "jpg") {
+          createMenu("50%", "50%", "showContent2");
+          showImg(file.content, file.name, file.extension);
         }
       };
 
@@ -328,7 +330,7 @@ function createMenu(posX, posY, menuId) {
   createMenu.style.display = "block";
 
   setTimeout(() => {
-      createMenu.classList.add('fade-in');
+    createMenu.classList.add('fade-in');
   }, 5);
   createMenu.style.left = posX + "px";
   createMenu.style.top = posY + "px";
@@ -339,17 +341,29 @@ function closeMenu(menuId) {
   createFolderMenu.classList.remove('fade-in');
 
   setTimeout(() => {
-      createFolderMenu.style.display = "none";
-      if (menuId === 'showContent') {
-          document.querySelector('.save').style.display = 'none';
-      }
+    createFolderMenu.style.display = "none";
+    if (menuId === 'showContent') {
+      document.querySelector('.save').style.display = 'none';
+    }
   }, 100);
 }
 
 function showContent(fileContent, fileName, extension) {
   var contentDiv = document.getElementById("contentDiv");
   var openedFile = document.getElementById("openedFileName");
+
   contentDiv.textContent = fileContent;
+  openedFile.textContent = fileName + "." + extension;
+}
+
+function showImg(fileContent, fileName, extension) {
+  var openedFile = document.getElementById("openedFileName2");
+
+  var image = document.createElement("img");
+  var imageParent = document.getElementById("Temp");
+  image.src = fileContent;
+  imageParent.appendChild(image);
+
   openedFile.textContent = fileName + "." + extension;
 }
 
@@ -360,11 +374,11 @@ function createAnyFile(pathId, extension) {
     extension === "folder"
       ? document.getElementById("folderName").value
       : document.getElementById("fileName").value;
-  
+
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
     extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-  
+
   currentFolder.files.push({
     name: folderName,
     extension: extension,
@@ -377,7 +391,7 @@ function createAnyFile(pathId, extension) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById('contentDiv').addEventListener('input', function() {
+  document.getElementById('contentDiv').addEventListener('input', function () {
 
     document.querySelector('.save').style.display = 'block';
   });
@@ -396,7 +410,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function modifyTxtContent(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
-  
+
   if (currentFolder.files) {
     currentFolder.files.forEach((file) => {
       if (file.name === fileName) {
@@ -404,14 +418,14 @@ function modifyTxtContent(fileName, pathId) {
       }
     });
   }
-  
+
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
 }
 
 function modifyFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
-  
+
   if (currentFolder.files) {
     currentFolder.files.forEach((file) => {
       if (file.name === fileName) {
@@ -427,7 +441,7 @@ function deleteFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
   const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
   currentFolder.files.splice(indexToDelete, 1);
-  
+
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
 }
@@ -436,55 +450,111 @@ function deleteFile(fileName, pathId) {
 dragElement(document.getElementById("showContent"));
 
 function dragElement(elmnt) {
-    var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    const header = document.getElementById("dragHeader");
-    
-    if (header) {
-        header.onmousedown = dragMouseDown;
-    }
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  const header = document.getElementById("dragHeader");
 
-    function dragMouseDown(e) {
-        if (e.target !== header) return; 
-        e = e || window.event;
-        e.preventDefault();
-        pos3 = e.clientX;
-        pos4 = e.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
+  if (header) {
+    header.onmousedown = dragMouseDown;
+  }
 
-    function elementDrag(e) {
-        e = e || window.event;
-        e.preventDefault();
-        pos1 = pos3 - e.clientX;
-        pos2 = pos4 - e.clientY;
-        pos3 = e.clientX;
-        pos4 = e.clientY;
+  function dragMouseDown(e) {
+    if (e.target !== header) return;
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
 
-        const newTop = elmnt.offsetTop - pos2;
-        const newLeft = elmnt.offsetLeft - pos1; 
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
 
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        const elementWidth = elmnt.offsetWidth;
-        const elementHeight = elmnt.offsetHeight;
-        
+    const newTop = elmnt.offsetTop - pos2;
+    const newLeft = elmnt.offsetLeft - pos1;
 
-        const padding = 10;
-        const maxX = windowWidth - elementWidth - padding;
-        const maxY = windowHeight - elementHeight - padding;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const elementWidth = elmnt.offsetWidth;
+    const elementHeight = elmnt.offsetHeight;
 
-        elmnt.style.top = Math.min(Math.max(padding, newTop), maxY) + "px";
-        elmnt.style.left = Math.min(Math.max(padding, newLeft), maxX) + "px";
-    }
 
-    function closeDragElement() {
-        document.onmouseup = null;
-        document.onmousemove = null;
-    }
+    const padding = 10;
+    const maxX = windowWidth - elementWidth - padding;
+    const maxY = windowHeight - elementHeight - padding;
+
+    elmnt.style.top = Math.min(Math.max(padding, newTop), maxY) + "px";
+    elmnt.style.left = Math.min(Math.max(padding, newLeft), maxX) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    dragElement(document.getElementById("showContent"));
+document.addEventListener("DOMContentLoaded", function () {
+  dragElement(document.getElementById("showContent"));
+});
+
+
+dragElement(document.getElementById("showContent2"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  const header = document.getElementById("dragHeader2");
+
+  if (header) {
+    header.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    if (e.target !== header) return;
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+
+    const newTop = elmnt.offsetTop - pos2;
+    const newLeft = elmnt.offsetLeft - pos1;
+
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const elementWidth = elmnt.offsetWidth;
+    const elementHeight = elmnt.offsetHeight;
+
+
+    const padding = 10;
+    const maxX = windowWidth - elementWidth - padding;
+    const maxY = windowHeight - elementHeight - padding;
+
+    elmnt.style.top = Math.min(Math.max(padding, newTop), maxY) + "px";
+    elmnt.style.left = Math.min(Math.max(padding, newLeft), maxX) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  dragElement(document.getElementById("showContent2"));
 });
 
