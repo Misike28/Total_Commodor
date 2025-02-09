@@ -73,7 +73,22 @@
                     "extension": "folder",
                     "size": "",
                     "date": "2025-01-29",
-                    "files": []
+                    "files": [
+                        {
+                            "name": "goth image",
+                            "extension": "jpg",
+                            "size": "1kb",
+                            "date": "2025-01-30",
+                            "content": "img/dsa.jpg"
+                        },
+                        {
+                            "name": "gubacs",
+                            "extension": "png",
+                            "size": "1kb",
+                            "date": "2025-01-30",
+                            "content": "img/vince.png"
+                        }
+                    ]
                 }
             ]
         },

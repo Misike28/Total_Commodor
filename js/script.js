@@ -1,7 +1,6 @@
 var adatok;
 var lastlemez1 = "C";
 var lastlemez2 = "C";
-
 // Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
-
   tableResizing();
 });
 
@@ -84,17 +82,7 @@ function getCurrentFolder(pathId) {
   const pathArray = path.split("\\").filter(Boolean).slice(1);
 
   let currentFolder = { files: adatok.drives[driv].files };
-
   for (let i = 0; i < pathArray.length; i++) {
-<<<<<<< Updated upstream
-    const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
-    if (found && found.files) {
-      currentFolder = found;
-    }
-  }
-
-
-=======
     let talal = false;
       const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
       if (found && found.files) {
@@ -108,9 +96,7 @@ function getCurrentFolder(pathId) {
           pathId === "path1" ? "path1" : "path2"
         );
       }
-
-    }
->>>>>>> Stashed changes
+  }
   return currentFolder;
 }
 
@@ -151,7 +137,7 @@ function loadData(tbodyId, pathId) {
         nameCell.innerHTML = "<i class='fas fa-folder'></i> " + file.name;
       }
       else if (file.extension == "png") {
-        nameCell.innerHTML = "<i class='fa-solid -image'></i> " + "<a href='img/asd.jpg'>"+file.name +"</a>";
+        nameCell.innerHTML = "<i class='fa-solid -image'></i> " + file.name;
       }
       else if (file.extension == "mp4") {
         nameCell.innerHTML = "<i class='fa-solid fa-video'></i> " + file.name;
@@ -225,7 +211,6 @@ function loadData(tbodyId, pathId) {
           alert("Idk how to play this file");
         }
         else if (file.extension === "png" || file.extension === "jpg") {
-          createMenu("50%", "50%", "showContent2");
           showImg(file.content, file.name, file.extension);
         }
       };
@@ -371,6 +356,8 @@ function createMenu(posX, posY, menuId) {
   }, 5);
   createMenu.style.left = posX + "px";
   createMenu.style.top = posY + "px";
+
+
 }
 
 function closeMenu(menuId) {
@@ -398,10 +385,33 @@ function showImg(fileContent, fileName, extension) {
 
   var image = document.createElement("img");
   var imageParent = document.getElementById("Temp");
+  imageParent.innerHTML="";
+  var filenev =fileName + "." + extension;
+  image.id=filenev
   image.src = fileContent;
   imageParent.appendChild(image);
+  openedFile.textContent = filenev;
+  var dimension = document.getElementById(filenev);
+  console.log(image.height)
+  var height = dimension.height;
+  var width = dimension.width;
+  createMenuImage("50%", "50%", "showContent2",height,width);
+}
+function createMenuImage(posX, posY, menuId,height,width) {
+  let createMenu = document.getElementById(menuId);
+  createMenu.style.display = "block";
 
-  openedFile.textContent = fileName + "." + extension;
+  setTimeout(() => {
+    createMenu.classList.add('fade-in');
+  }, 5);
+  createMenu.style.left = posX + "px";
+  createMenu.style.top = posY + "px";
+  document.getElementById("showContent2").style.height = height+"px";
+  document.getElementById("showContent2").style.width = width+"px";
+
+
+
+
 }
 
 
