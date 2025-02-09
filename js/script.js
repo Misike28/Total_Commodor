@@ -1,3 +1,4 @@
+/** Global variables for storing file system data and last used drives */
 var adatok;
 var lastlemez1 = "C";
 var lastlemez2 = "C";
@@ -14,7 +15,10 @@ document.addEventListener("DOMContentLoaded", async function () {
   tableResizing();
 });
 
-// Table resizing
+/**
+ * Resizes table columns using mouse drag
+ * Attaches event listeners to column resizer elements
+ */
 function tableResizing() {
   const resizers = document.querySelectorAll("th .resizer, .middle .resizer");
   let startX, startWidth, resizerParent;
@@ -46,7 +50,10 @@ function tableResizing() {
   });
 }
 
-// Dropdown menu
+/**
+ * Toggles visibility of a dropdown menu
+ * @param {string} dropdownId - ID of the dropdown element to toggle
+ */
 function showDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   if (dropdown) {
@@ -54,7 +61,12 @@ function showDropdown(dropdownId) {
   }
 }
 
-// Drive change and folder load
+/**
+ * Changes the current drive and updates the path display
+ * @param {string} lemez - Drive letter to switch to
+ * @param {string} pathId - ID of the path element to update
+ * @param {string} dropdownId - ID of the dropdown to toggle
+ */
 function lemezchange(lemez, pathId, dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   dropdown.classList.toggle("show");
@@ -69,13 +81,22 @@ function lemezchange(lemez, pathId, dropdownId) {
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
+/**
+ * Loads contents of a folder into view
+ * @param {string} folderName - Name of folder to load
+ * @param {string} pathId - ID of the path element to update
+ */
 function load(folderName, pathId) {
   let path = document.getElementById(pathId).innerHTML;
   document.getElementById(pathId).innerHTML = path + folderName + "\\";
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
-// Find current folder
+/**
+ * Finds and returns the current folder object based on path
+ * @param {string} pathId - ID of the path element
+ * @returns {Object} Current folder object containing files
+ */
 function getCurrentFolder(pathId) {
   let path = document.getElementById(pathId).innerHTML;
   const driv = path[0];
@@ -100,7 +121,11 @@ function getCurrentFolder(pathId) {
   return currentFolder;
 }
 
-// Data loading
+/**
+ * Loads file/folder data into the specified table
+ * @param {string} tbodyId - ID of table body to populate
+ * @param {string} pathId - ID of path element
+ */
 function loadData(tbodyId, pathId) {
   let path = document.getElementById(pathId).innerHTML;
   if (path == "<br>") {
@@ -346,20 +371,40 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-//show and hide Create menu
+/**
+ * Creates and displays a menu at specified coordinates
+ * @param {number|string} posX - X position or percentage
+ * @param {number|string} posY - Y position or percentage
+ * @param {string} menuId - ID of menu element to show
+ */
 function createMenu(posX, posY, menuId) {
-  let createMenu = document.getElementById(menuId);
-  createMenu.style.display = "block";
+  let menuElement = document.getElementById(menuId);
+  menuElement.style.display = "block";
+
+  // Center the menu if it's the content viewer
+  if (menuId === "showContent") {
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const menuWidth = menuElement.offsetWidth;
+    const menuHeight = menuElement.offsetHeight;
+    
+    menuElement.style.left = Math.max(0, (windowWidth / 2 - menuWidth / 2)) + "px";
+    menuElement.style.top = Math.max(0, (windowHeight / 2 - menuHeight / 2)) + "px";
+    menuElement.style.transform = "none"; // Remove transform
+  } else {
+    menuElement.style.left = posX + "px";
+    menuElement.style.top = posY + "px";
+  }
 
   setTimeout(() => {
-    createMenu.classList.add('fade-in');
+    menuElement.classList.add('fade-in');
   }, 5);
-  createMenu.style.left = posX + "px";
-  createMenu.style.top = posY + "px";
-
-
 }
 
+/**
+ * Closes a menu with fade animation
+ * @param {string} menuId - ID of menu element to close
+ */
 function closeMenu(menuId) {
   let createFolderMenu = document.getElementById(menuId);
   createFolderMenu.classList.remove('fade-in');
@@ -372,6 +417,12 @@ function closeMenu(menuId) {
   }, 100);
 }
 
+/**
+ * Displays text file content in viewer
+ * @param {string} fileContent - Content to display
+ * @param {string} fileName - Name of file
+ * @param {string} extension - File extension
+ */
 function showContent(fileContent, fileName, extension) {
   var contentDiv = document.getElementById("contentDiv");
   var openedFile = document.getElementById("openedFileName");
@@ -380,42 +431,61 @@ function showContent(fileContent, fileName, extension) {
   openedFile.textContent = fileName + "." + extension;
 }
 
+/**
+ * Displays image in viewer
+ * @param {string} fileContent - Image source/content
+ * @param {string} fileName - Name of image file
+ * @param {string} extension - Image file extension
+ */
 function showImg(fileContent, fileName, extension) {
   var openedFile = document.getElementById("openedFileName2");
-
-  var image = document.createElement("img");
   var imageParent = document.getElementById("Temp");
-  imageParent.innerHTML="";
-  var filenev =fileName + "." + extension;
-  image.id=filenev
+  imageParent.innerHTML = "";
+  
+  var image = document.createElement("img");
+  var filenev = fileName + "." + extension;
+  image.id = filenev;
+  
+  image.onload = function() {
+    var height = image.height;
+    var width = image.width;
+    createMenuImage("showContent2", height, width);
+  };
+  
   image.src = fileContent;
   imageParent.appendChild(image);
   openedFile.textContent = filenev;
-  var dimension = document.getElementById(filenev);
-  console.log(image.height)
-  var height = dimension.height;
-  var width = dimension.width;
-  createMenuImage("50%", "50%", "showContent2",height,width);
 }
-function createMenuImage(posX, posY, menuId,height,width) {
-  let createMenu = document.getElementById(menuId);
-  createMenu.style.display = "block";
+
+/**
+ * Creates image viewer menu with proper dimensions
+ * @param {string} menuId - Menu element ID
+ * @param {number} height - Image height
+ * @param {number} width - Image width
+ */
+function createMenuImage(menuId, height, width) {
+  let menuElement = document.getElementById(menuId);
+  menuElement.style.display = "block";
+  
+  document.getElementById("showContent2").style.height = height + "px";
+  document.getElementById("showContent2").style.width = width + "px";
+
+  const windowWidth = window.innerWidth;
+  const windowHeight = window.innerHeight;
+  
+  menuElement.style.left = (windowWidth / 2 - width / 2) + "px";
+  menuElement.style.top = (windowHeight / 2 - height / 2) + "px";
 
   setTimeout(() => {
-    createMenu.classList.add('fade-in');
+    menuElement.classList.add('fade-in');
   }, 5);
-  createMenu.style.left = posX + "px";
-  createMenu.style.top = posY + "px";
-  document.getElementById("showContent2").style.height = height+"px";
-  document.getElementById("showContent2").style.width = width+"px";
-
-
-
-
 }
 
-
-// Create file or folder
+/**
+ * Creates a new file or folder in the current directory
+ * @param {string} pathId - Path element ID
+ * @param {string} extension - File extension or "folder"
+ */
 function createAnyFile(pathId, extension) {
   let folderName =
     extension === "folder"
@@ -441,6 +511,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('contentDiv').addEventListener('input', function () {
 
     document.querySelector('.save').style.display = 'block';
+    document.querySelector('.contentButtons').style.display = 'block';
   });
 
   const tables = [
@@ -455,6 +526,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+/**
+ * Updates content of a text file
+ * @param {string} fileName - Name of file to modify
+ * @param {string} pathId - Path element ID
+ */
 function modifyTxtContent(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
 
@@ -470,6 +546,11 @@ function modifyTxtContent(fileName, pathId) {
   loadData("tbody2", "path2");
 }
 
+/**
+ * Renames a file or folder
+ * @param {string} fileName - Current name of file
+ * @param {string} pathId - Path element ID
+ */
 function modifyFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
 
@@ -484,6 +565,11 @@ function modifyFile(fileName, pathId) {
   loadData("tbody2", "path2");
 }
 
+/**
+ * Deletes a file or folder
+ * @param {string} fileName - Name of file to delete
+ * @param {string} pathId - Path element ID
+ */
 function deleteFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
   const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
@@ -494,20 +580,26 @@ function deleteFile(fileName, pathId) {
 }
 
 // yep ezt en irtam 100% Source: https://www.w3schools.com/howto/howto_js_draggable.asp es valami random stackoverflow thread meg copilot
-dragElement(document.getElementById("showContent"));
 
+/**
+ * Makes an element draggable by its header
+ * @param {HTMLElement} elmnt - Element to make draggable
+ */
 function dragElement(elmnt) {
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  const header = document.getElementById("dragHeader");
+  const header = elmnt.querySelector('.headerDrag'); 
+
 
   if (header) {
+
+    header.style.cursor = 'move';
     header.onmousedown = dragMouseDown;
   }
 
   function dragMouseDown(e) {
-    if (e.target !== header) return;
     e = e || window.event;
     e.preventDefault();
+
     pos3 = e.clientX;
     pos4 = e.clientY;
     document.onmouseup = closeDragElement;
@@ -517,23 +609,26 @@ function dragElement(elmnt) {
   function elementDrag(e) {
     e = e || window.event;
     e.preventDefault();
+
     pos1 = pos3 - e.clientX;
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
 
+
     const newTop = elmnt.offsetTop - pos2;
     const newLeft = elmnt.offsetLeft - pos1;
+
 
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const elementWidth = elmnt.offsetWidth;
     const elementHeight = elmnt.offsetHeight;
 
-
     const padding = 10;
     const maxX = windowWidth - elementWidth - padding;
     const maxY = windowHeight - elementHeight - padding;
+
 
     elmnt.style.top = Math.min(Math.max(padding, newTop), maxY) + "px";
     elmnt.style.left = Math.min(Math.max(padding, newLeft), maxX) + "px";
@@ -545,63 +640,62 @@ function dragElement(elmnt) {
   }
 }
 
+// Initialize draggable elements
 document.addEventListener("DOMContentLoaded", function () {
   dragElement(document.getElementById("showContent"));
-});
-
-
-dragElement(document.getElementById("showContent2"));
-
-function dragElement(elmnt) {
-  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-  const header = document.getElementById("dragHeader2");
-
-  if (header) {
-    header.onmousedown = dragMouseDown;
-  }
-
-  function dragMouseDown(e) {
-    if (e.target !== header) return;
-    e = e || window.event;
-    e.preventDefault();
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-    document.onmouseup = closeDragElement;
-    document.onmousemove = elementDrag;
-  }
-
-  function elementDrag(e) {
-    e = e || window.event;
-    e.preventDefault();
-    pos1 = pos3 - e.clientX;
-    pos2 = pos4 - e.clientY;
-    pos3 = e.clientX;
-    pos4 = e.clientY;
-
-    const newTop = elmnt.offsetTop - pos2;
-    const newLeft = elmnt.offsetLeft - pos1;
-
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
-    const elementWidth = elmnt.offsetWidth;
-    const elementHeight = elmnt.offsetHeight;
-
-
-    const padding = 10;
-    const maxX = windowWidth - elementWidth - padding;
-    const maxY = windowHeight - elementHeight - padding;
-
-    elmnt.style.top = Math.min(Math.max(padding, newTop), maxY) + "px";
-    elmnt.style.left = Math.min(Math.max(padding, newLeft), maxX) + "px";
-  }
-
-  function closeDragElement() {
-    document.onmouseup = null;
-    document.onmousemove = null;
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
   dragElement(document.getElementById("showContent2"));
 });
+
+/**
+ * Minimizes or restores a window
+ * @param {string} windowId - ID of window to minimize/restore
+ */
+function minimizeWindow(windowId) {
+    const window = document.getElementById(windowId);
+
+}
+
+/**
+ * Toggles fullscreen state of a window
+ * @param {string} windowId - ID of window to maximize/restore
+ */
+function maximizeWindow(windowId) {
+    const window = document.getElementById(windowId);
+    
+    if (window.style.width === "95vw") {
+
+        if(windowId === "showContent2") {
+            const img = window.querySelector('img');
+            if(img) {
+                window.style.height = img.height + "px";
+                window.style.width = img.width + "px";
+                
+                const windowWidth = document.documentElement.clientWidth;
+                const windowHeight = document.documentElement.clientHeight;
+                window.style.left = (windowWidth / 2 - img.width / 2) + "px";
+                window.style.top = (windowHeight / 2 - img.height / 2) + "px";
+            }
+        } else {
+            window.style.width = "50%";
+            window.style.height = "50vh";
+            
+            const windowWidth = document.documentElement.clientWidth;
+            const windowHeight = document.documentElement.clientHeight;
+            const elemWidth = window.offsetWidth;
+            const elemHeight = window.offsetHeight;
+            window.style.left = (windowWidth / 2 - elemWidth / 2) + "px";
+            window.style.top = (windowHeight / 2 - elemHeight / 2) + "px";
+        }
+    } else {
+        window.style.width = "95vw";
+        window.style.height = "95vh";
+        const windowWidth = document.documentElement.clientWidth;
+        const windowHeight = document.documentElement.clientHeight;
+        const elemWidth = window.offsetWidth;
+        const elemHeight = window.offsetHeight;
+        window.style.left = (windowWidth / 2 - elemWidth / 2) + "px";
+        window.style.top = (windowHeight / 2 - elemHeight / 2) + "px";
+    }
+}
+
 

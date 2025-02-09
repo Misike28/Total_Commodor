@@ -63,11 +63,13 @@ table {
     margin: 5px;
     border-collapse: collapse;
 }
+
 tbody {
     cursor: pointer;
 }
 
-th,td {
+th,
+td {
     text-align: left;
     padding: 5px;
     position: relative;
@@ -163,18 +165,19 @@ th .resizer {
     z-index: 99;
 }
 
-.folderCreate{
+.folderCreate {
     display: none;
     position: absolute;
     z-index: 99;
     width: fit-content;
     height: fit-content;
 }
+
 .divContent {
     display: none;
     opacity: 0;
     position: absolute;
-    top: 20%;  
+    top: 20%;
     left: 20%;
     width: 50%;
     height: 50vh;
@@ -230,6 +233,7 @@ th .resizer {
     overflow: auto;
     background-color: #f5f5f5;
     width: 100%;
+    height: 100%;
 }
 
 .contentButtons {
@@ -239,6 +243,7 @@ th .resizer {
     bottom: 0;
     width: 100%;
     height: 45px;
+    display: none;
 }
 
 .save {
@@ -253,4 +258,21 @@ th .resizer {
 
 .save:hover {
     background-color: #5a628f;
+}
+
+.windowControls {
+    display: flex;
+    gap: 5px;
+}
+
+.windowControls button {
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 2px 6px;
+}
+
+.windowControls button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
 }

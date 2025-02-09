@@ -174,9 +174,13 @@
     </div>
 
     <div class="divContent" id="showContent">
-        <div class="contentHeader" id="dragHeader">
+        <div class="contentHeader headerDrag" id="dragHeader">
             <span id="openedFileName"></span>
-            <button onclick="closeMenu('showContent')"><i class="fas fa-times"></i></button>
+            <div class="windowControls">
+                <button onclick="minimizeWindow('showContent')"><i class="fas fa-minus"></i></button>
+                <button onclick="maximizeWindow('showContent')"><i class="fas fa-expand"></i></button>
+                <button onclick="closeMenu('showContent')"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="contentOpened" id="contentDiv" contenteditable="true"></div>
         <div class="contentButtons">
@@ -185,9 +189,13 @@
     </div>
 
     <div class="divContent" id="showContent2">
-        <div class="contentHeader" id="dragHeader2">
+        <div class="contentHeader headerDrag" id="dragHeader2">
             <span id="openedFileName2"></span>
-            <button onclick="closeMenu('showContent2')"><i class="fas fa-times"></i></button>
+            <div class="windowControls">
+                <button onclick="minimizeWindow('showContent2')"><i class="fas fa-minus"></i></button>
+                <button onclick="maximizeWindow('showContent2')"><i class="fas fa-expand"></i></button>
+                <button onclick="closeMenu('showContent2')"><i class="fas fa-times"></i></button>
+            </div>
         </div>
         <div class="placehold" id="Temp">
             
