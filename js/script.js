@@ -161,8 +161,8 @@ function loadData(tbodyId, pathId) {
       if (file.extension == "folder") {
         nameCell.innerHTML = "<i class='fas fa-folder'></i> " + file.name;
       }
-      else if (file.extension == "png") {
-        nameCell.innerHTML = "<i class='fa-solid -image'></i> " + file.name;
+      else if (file.extension == "png" || file.extension == "jpg") {
+        nameCell.innerHTML = "<i class='fa-solid fa-image'></i> " + file.name;
       }
       else if (file.extension == "mp4") {
         nameCell.innerHTML = "<i class='fa-solid fa-video'></i> " + file.name;
@@ -455,6 +455,7 @@ function showImg(fileContent, fileName, extension) {
   image.src = fileContent;
   imageParent.appendChild(image);
   openedFile.textContent = filenev;
+
 }
 
 /**
@@ -495,13 +496,18 @@ function createAnyFile(pathId, extension) {
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
     extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-
+  let content=""
+  if(extension==="png" || extension==="jpg"){
+    content ="img/"+folderName+"."+extension;
+  }
   currentFolder.files.push({
     name: folderName,
     extension: extension,
     size: fileSize,
     date: new Date().toLocaleDateString(),
-    ...(extension === "folder" ? { files: [] } : { content: "" })
+    ...(extension === "folder" ? { files: [] } : { content: "" }),
+    content:content,
+
   });
 
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
