@@ -173,5 +173,27 @@ th .resizer {
     height: fit-content;
 }
 
+.resize {
+    resize: both;
+    overflow: hidden;
+    background: none;
+    box-sizing: content-box;
+}
+
+#Temp {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#Temp img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: fill;
+}
 
 
+
+  

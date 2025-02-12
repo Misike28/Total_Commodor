@@ -154,7 +154,17 @@
     <div class="folderCreate" id="fileCreate">
         <div>
             <input type="text" id="fileName" placeholder="File Name">
-            <input type="text" id="extension" placeholder="File Extension">
+            <select id="extension">
+                <option value="">Select Extension</option>
+                <option value="txt">txt</option>
+                <option value="html">html</option>
+                <option value="png">png</option>
+                <option value="jpg">jpg</option>
+                <option value="mp4">mp4</option>
+                <option value="mp3">mp3</option>
+                <option value="pdf">pdf</option>
+                <option value="doc">doc</option>
+            </select>
             <button id="createFileButton">Create</button>
             <button onclick="closeMenu('fileCreate')">Close</button>
         </div>
@@ -179,7 +189,6 @@
         <div class="contentHeader headerDrag" id="dragHeader">
             <span id="openedFileName"></span>
             <div class="windowControls">
-                <button onclick="minimizeWindow('showContent')"><i class="fas fa-minus"></i></button>
                 <button onclick="maximizeWindow('showContent')"><i class="fas fa-expand"></i></button>
                 <button onclick="closeMenu('showContent')"><i class="fas fa-times"></i></button>
             </div>
@@ -190,11 +199,10 @@
         </div>
     </div>
 
-    <div class="divContent" id="showContent2">
+    <div class="divContent resize" id="showContent2">
         <div class="contentHeader headerDrag" id="dragHeader2">
             <span id="openedFileName2"></span>
             <div class="windowControls">
-                <button onclick="minimizeWindow('showContent2')"><i class="fas fa-minus"></i></button>
                 <button onclick="maximizeWindow('showContent2')"><i class="fas fa-expand"></i></button>
                 <button onclick="closeMenu('showContent2')"><i class="fas fa-times"></i></button>
             </div>

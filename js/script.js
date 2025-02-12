@@ -2,6 +2,9 @@
 var adatok;
 var lastlemez1 = "C";
 var lastlemez2 = "C";
+var selectedRow = null;
+var selectedFile = null;
+var selectedPath = null;
 // Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
@@ -49,6 +52,39 @@ function tableResizing() {
     }
   });
 }
+
+document.addEventListener("keydown", function (pressedKey) {
+  if (pressedKey.key === "Delete" || pressedKey.key === "F8" && selectedFile) {
+    pressedKey.preventDefault();
+    deleteFile(selectedFile.name, selectedPath);
+  }
+  if (pressedKey.key === "F7") {
+    pressedKey.preventDefault();
+    createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
+    let createFolderS = document.getElementById("create");
+    createFolderS.onclick = function () {
+      if (document.getElementById("folderName").value === "") {
+        alert("A nev nem lehet ures");
+        return;
+      }
+      createAnyFile(window.id === "win1" ? "path1" : "path2", "folder");
+    };
+  }
+  if (pressedKey.key === "F4") {
+    pressedKey.preventDefault();
+    if (!selectedFile) {
+      alert("Nincs kivalasztva file");
+      return;
+    }
+    if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
+      createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
+      showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
+    }
+    else {
+      alert("Ezt nem lehet modoositani");
+    }
+  }
+});
 
 /**
  * Toggles visibility of a dropdown menu
@@ -105,18 +141,18 @@ function getCurrentFolder(pathId) {
   let currentFolder = { files: adatok.drives[driv].files };
   for (let i = 0; i < pathArray.length; i++) {
     let talal = false;
-      const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
-      if (found && found.files) {
-          currentFolder = found;
-          talal = true;
-      }
-      if(talal==false){
-        defaultdriver(pathId === "path1" ? "path1" : "path2")
-        loadData(
-          pathId === "path1" ? "tbody1" : "tbody2",
-          pathId === "path1" ? "path1" : "path2"
-        );
-      }
+    const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
+    if (found && found.files) {
+      currentFolder = found;
+      talal = true;
+    }
+    if (talal == false) {
+      defaultdriver(pathId === "path1" ? "path1" : "path2")
+      loadData(
+        pathId === "path1" ? "tbody1" : "tbody2",
+        pathId === "path1" ? "path1" : "path2"
+      );
+    }
   }
   return currentFolder;
 }
@@ -189,25 +225,23 @@ function loadData(tbodyId, pathId) {
       row.appendChild(extensionCell);
 
       const sizeCell = document.createElement("td");
-      if(file.extension=="txt" || file.extension=="html"){
+      if (file.extension == "txt" || file.extension == "html") {
         let hossz = file.content.length;
-        let meret = Math.round(hossz/1024*10)/10;
-        console.log(meret)
-        let meretbyte = "KB"; 
-        if(meret>1000){
-          meretbyte="MB"
-          meret= meret/1000
-          Math.round(meret*10)/10
+        let meret = Math.round(hossz / 1024 * 10) / 10;
+        let meretbyte = "KB";
+        if (meret > 1000) {
+          meretbyte = "MB"
+          meret = meret / 1000
+          Math.round(meret * 10) / 10
         }
-        else if(hossz<100){
-          console.log("hal")
+        else if (hossz < 100) {
           meretbyte = "B"
           meret = hossz;
-          Math.round(meret*10)/10
+          Math.round(meret * 10) / 10
         }
         sizeCell.textContent = meret + meretbyte;
       }
-      else{
+      else {
         sizeCell.textContent = file.size;
       }
       row.appendChild(sizeCell);
@@ -215,6 +249,32 @@ function loadData(tbodyId, pathId) {
       const dateCell = document.createElement("td");
       dateCell.textContent = file.date;
       row.appendChild(dateCell);
+
+      row.onclick = function () {
+        let fileName = row.cells[0].textContent.trim();
+
+        if (selectedRow == row) {
+          selectedRow.style.backgroundColor = "";
+          selectedRow = null;
+          selectedFile = null;
+          selectedPath = null;
+          return;
+        }
+        else if (selectedRow) {
+          selectedRow.style.backgroundColor = "";
+          row.style.backgroundColor = "lightblue";
+          selectedRow = row;
+          selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
+          selectedPath = pathId;
+          return;
+        }
+        else {
+          row.style.backgroundColor = "lightblue";
+          selectedRow = row;
+          selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
+          selectedPath = pathId;
+        }
+      };
 
       row.ondblclick = function () {
         if (file.extension === "folder") {
@@ -355,8 +415,12 @@ document.addEventListener("DOMContentLoaded", function () {
       createFileS.onclick = function () {
         let extension = document.getElementById("extension").value;
         let text = document.getElementById("fileName").value;
-        if (text === "" && extension === "") {
-          alert("Toltsed mar ki a dolgokat pls");
+        if (text === "") {
+          alert("Add meg a fajl nevet");
+          return;
+        }
+        else if (extension === "") {
+          alert("Add meg a fajl tipusat");
           return;
         }
         createAnyFile(window.id === "win1" ? "path1" : "path2", extension);
@@ -381,16 +445,14 @@ function createMenu(posX, posY, menuId) {
   let menuElement = document.getElementById(menuId);
   menuElement.style.display = "block";
 
-  // Center the menu if it's the content viewer
   if (menuId === "showContent") {
     const windowWidth = window.innerWidth;
     const windowHeight = window.innerHeight;
     const menuWidth = menuElement.offsetWidth;
     const menuHeight = menuElement.offsetHeight;
-    
+
     menuElement.style.left = Math.max(0, (windowWidth / 2 - menuWidth / 2)) + "px";
     menuElement.style.top = Math.max(0, (windowHeight / 2 - menuHeight / 2)) + "px";
-    menuElement.style.transform = "none"; // Remove transform
   } else {
     menuElement.style.left = posX + "px";
     menuElement.style.top = posY + "px";
@@ -399,22 +461,6 @@ function createMenu(posX, posY, menuId) {
   setTimeout(() => {
     menuElement.classList.add('fade-in');
   }, 5);
-}
-
-/**
- * Closes a menu with fade animation
- * @param {string} menuId - ID of menu element to close
- */
-function closeMenu(menuId) {
-  let createFolderMenu = document.getElementById(menuId);
-  createFolderMenu.classList.remove('fade-in');
-
-  setTimeout(() => {
-    createFolderMenu.style.display = "none";
-    if (menuId === 'showContent') {
-      document.querySelector('.save').style.display = 'none';
-    }
-  }, 100);
 }
 
 /**
@@ -441,22 +487,24 @@ function showImg(fileContent, fileName, extension) {
   var openedFile = document.getElementById("openedFileName2");
   var imageParent = document.getElementById("Temp");
   imageParent.innerHTML = "";
-  
+
   var image = document.createElement("img");
   var filenev = fileName + "." + extension;
   image.id = filenev;
-  
-  image.onload = function() {
-    var height = image.height;
-    var width = image.width;
-    createMenuImage("showContent2", height, width);
+
+  image.onload = function () {
+    const originalWidth = image.naturalWidth;
+    const originalHeight = image.naturalHeight;
+
+    createMenuImage("showContent2", originalHeight, originalWidth);
   };
-  
+
   image.src = fileContent;
+  image.alt = filenev;
   imageParent.appendChild(image);
   openedFile.textContent = filenev;
-
 }
+
 
 /**
  * Creates image viewer menu with proper dimensions
@@ -467,13 +515,13 @@ function showImg(fileContent, fileName, extension) {
 function createMenuImage(menuId, height, width) {
   let menuElement = document.getElementById(menuId);
   menuElement.style.display = "block";
-  
+
   document.getElementById("showContent2").style.height = height + "px";
   document.getElementById("showContent2").style.width = width + "px";
 
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
-  
+
   menuElement.style.left = (windowWidth / 2 - width / 2) + "px";
   menuElement.style.top = (windowHeight / 2 - height / 2) + "px";
 
@@ -496,17 +544,17 @@ function createAnyFile(pathId, extension) {
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
     extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-  let content=""
-  if(extension==="png" || extension==="jpg"){
-    content ="img/"+folderName+"."+extension;
+  let content = ""
+  if (extension === "png" || extension === "jpg") {
+    content = "img/" + folderName + "." + extension;
   }
   currentFolder.files.push({
     name: folderName,
     extension: extension,
     size: fileSize,
-    date: new Date().toLocaleDateString(),
+    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
     ...(extension === "folder" ? { files: [] } : { content: "" }),
-    content:content,
+    content: content,
 
   });
 
@@ -544,6 +592,7 @@ function modifyTxtContent(fileName, pathId) {
     currentFolder.files.forEach((file) => {
       if (file.name === fileName) {
         file.content = document.getElementById("contentDiv").textContent;
+        file.date = new Intl.DateTimeFormat('en-CA').format(new Date());
       }
     });
   }
@@ -584,6 +633,3 @@ function deleteFile(fileName, pathId) {
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
 }
-
-
-
