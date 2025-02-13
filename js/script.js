@@ -775,7 +775,14 @@ function deleteFile(fileName, pathId) {
 
 function copyFile(fileName, pathId){
   const currentFolder = getCurrentFolder(pathId);
-  const indexToCopy = currentFolder.files.findIndex(item => item.name === fileName);
-  console.log(indexToCopy);
-  console.log(pathID);
+  const indexToCopy = currentFolder.files.find(item => item.name === fileName);
+  let ext = indexToCopy.extension
+
+
+  let id = "path1"
+  if(pathId=="path1"){
+    id="path2"
+  }
+  document.getElementById("fileName").value=indexToCopy.name;
+  createAnyFile(id,ext)
 }
