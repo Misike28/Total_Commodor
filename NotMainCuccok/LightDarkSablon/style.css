@@ -49,7 +49,6 @@ body{
     width: 100%;
     background-color: #CDC1FF;
     height: 900px;
-    padding: 1%;
     transition: all 0.2s linear;
 }
 
@@ -86,13 +85,21 @@ table{
 
 .path-container{
     width: 100%;
-    border: 1px solid red;
     display: flex;
     flex-direction: row;
+    margin-bottom: 10px;
 }
 
 .path{
+    width: 100%;
+    background-color: #CDC1FF;
+    transition: background-color 0.2s linear;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
 
+.path:focus{
+    outline: none;
 }
 
 /* path -> dropdown-arrow */
@@ -106,15 +113,24 @@ table{
     margin: 0;
     padding: 0;
     transform: rotate(-90deg);
-    transition: transform 0.2s linear;
+    transition: transform 0.1s linear, background-color 0.2s linear;
+    background-color: #CDC1FF;
+    margin-right: 5px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+
 }
 
 /* path -> dropdown */
 
 .dropdown-list{
-    display: none !important;
+    opacity: 0;
     position: absolute;
-    border: 1px solid red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -122,22 +138,34 @@ table{
     border-radius: 25px;
     background-color: #CDC1FF;
     margin-top: 20px;
-    width: 150px;
+    width: 75px;
+    transition: opacity 0.1s linear;
+    border: 1px solid red;
 }
 
-.path-container:has(input[id="ArrowCheckLeft"]:checked) .dropdown-list{
-    display: block !important;
+.path-container:has(input[id="ArrowCheck"]:checked) .dropdown-list{
+    opacity: 1;
 }
 
-.path-container:has(input[id="ArrowCheckLeft"]:checked) .dropdown-arrow{
+.path-container:has(input[id="ArrowCheck"]:checked) .dropdown-arrow{
     transform: rotate(0);
 }
 
 .dropdown-item{
-    margin-top: 3px;
-    margin-bottom: 3px;
+    padding-top: 3px;
+    padding-bottom: 3px;
     width: 100%;
     text-align: center;
+}
+
+.dropdown-item:first-child{
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+}
+
+.dropdown-item:last-child{
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 
 .dropdown-item:hover{
@@ -145,11 +173,68 @@ table{
     color: white;
 }
 
-/* file style */
+/* fileStyle */
 
 .file:hover{
     background-color: #8e9b9c;
     color: white;
+}
+
+/* FileMenu */
+
+.menuIcon{
+    padding-left: 15px;
+    padding-right: 12px;
+}
+
+.folderCreate{
+    z-index: 99;
+    width: 150px;
+    height: 100px;
+}
+
+.fileMenu{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+    z-index: 99;
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+
+    position: absolute;
+    display: none;
+
+    background-color: #CDC1FF;
+    border: 3px solid #A594F9;
+}
+
+.menuItem{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    width: 100%;
+}
+
+.menuItem:hover{
+    background-color: #A594F9;
+    transition: background-color 0.1s linear;
+}
+
+.menuItem:first-child{
+    border-top-right-radius: 25px;
+}
+
+.menuItem:last-child{
+    border-bottom-right-radius: 25px;
+}
+
+/* Create/Edit Form */
+
+.fileEditForm{
+    width: 80%;
+    background-color: #CDC1FF;
+    border: 1px solid #A594F9;
+    border-radius: 25px;
 }
 
 /* Theme switch */
@@ -210,7 +295,7 @@ input[id="ThemeSwitch"]:checked + .switch-slider{
 
 .nap, .hold{
     transition: display 0.2s linear;
-}
+} 
 
 /* darkmode */ 
 
@@ -232,4 +317,25 @@ body:has(input[id="ThemeSwitch"]:checked) .file:hover{
     color: white;
 }
 
+body:has(input[id="ThemeSwitch"]:checked) .path{
+    background-color: #31363F;
+}
+
+body:has(input[id="ThemeSwitch"]:checked) .dropdown-arrow{
+    background-color: #31363F;
+}
+
+/* dropdown-list dark mode ide */
+
+body:has(input[id="ThemeSwitch"]:checked) .fileMenu{
+    background-color: #31363F;
+    border: 1px solid #222831;
+}
+
+body:has(input[id="ThemeSwitch"]:checked) .menuItem:hover{
+    background-color: #222831;
+}
+
+
+/* tesztek */
 
