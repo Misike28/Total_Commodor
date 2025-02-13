@@ -347,48 +347,54 @@ function loadData(tbodyId, pathId) {
       dateCell.textContent = file.date;
       row.appendChild(dateCell);
 
+      let isControlPressed = false;
+
+      document.addEventListener("keydown", function (pressedKey) {
+        if (pressedKey.key === "Control") {
+          isControlPressed = true;
+        }
+      });
+
+      document.addEventListener("keyup", function (pressedKey) {
+        if (pressedKey.key === "Control") {
+          isControlPressed = false;
+        }
+      });
+
       row.onclick = function () {
         let fileName = row.cells[0].textContent.trim();
-        //TODO: implement multiple file selection (somewhat done just bugged AF)
-        document.addEventListener("keydown", function (pressedKey) {
-          if (pressedKey.key === "Control") {
-            pressedKey.preventDefault();
-            row.style.backgroundColor = "lightblue";
-            if (!selectedRows.includes(row)) {
-              selectedRows.push(row);
-              selectedFiles.push(getCurrentFolder(pathId).files.find((folder) => folder.name === fileName));
-            }
-            selectedPath = pathId;
-            selectedRow = row;
-          }
-          return;
-        });
 
-        if (selectedRow == row) {
-          selectedRow.style.backgroundColor = "";
-          selectedRow = null;
-          selectedFile = null;
-          selectedPath = null;
-          return;
-        }
-        else if (selectedRow || selectedRows.length > 0) {
-          selectedRow.style.backgroundColor = "";
+        if (isControlPressed) {
           row.style.backgroundColor = "lightblue";
-          selectedRow = row;
-          selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
+          if (!selectedRows.includes(row)) {
+            selectedRows.push(row);
+            selectedFiles.push(getCurrentFolder(pathId).files.find((folder) => folder.name === fileName));
+          }
           selectedPath = pathId;
+        }
+        else {
           selectedRows.forEach((row) => {
             row.style.backgroundColor = "";
           });
           selectedRows = [];
           selectedFiles = [];
-          return;
-        }
-        else {
-          row.style.backgroundColor = "lightblue";
-          selectedRow = row;
-          selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
-          selectedPath = pathId;
+          if (selectedRow == row) {
+            selectedRow.style.backgroundColor = "";
+            selectedRow = null;
+            selectedFile = null;
+            selectedPath = null;
+          } else if (selectedRow) {
+            selectedRow.style.backgroundColor = "";
+            row.style.backgroundColor = "lightblue";
+            selectedRow = row;
+            selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
+            selectedPath = pathId;
+          } else {
+            row.style.backgroundColor = "lightblue";
+            selectedRow = row;
+            selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
+            selectedPath = pathId;
+          }
         }
       };
 
@@ -772,5 +778,4 @@ function copyFile(fileName, pathId){
   const indexToCopy = currentFolder.files.findIndex(item => item.name === fileName);
   console.log(indexToCopy);
   console.log(pathID);
-
 }
