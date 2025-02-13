@@ -5,6 +5,9 @@ var lastlemez2 = "C";
 var selectedRow = null;
 var selectedFile = null;
 var selectedPath = null;
+var selectedWindow = null;
+var selectedRows = [];
+var selectedFiles = [];
 // Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
@@ -60,15 +63,20 @@ document.addEventListener("keydown", function (pressedKey) {
   }
   if (pressedKey.key === "F7") {
     pressedKey.preventDefault();
-    createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
-    let createFolderS = document.getElementById("create");
-    createFolderS.onclick = function () {
-      if (document.getElementById("folderName").value === "") {
-        alert("A nev nem lehet ures");
-        return;
-      }
-      createAnyFile(window.id === "win1" ? "path1" : "path2", "folder");
-    };
+    if (selectedWindow) {
+      createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
+      let createFolderS = document.getElementById("create");
+      createFolderS.onclick = function () {
+        if (document.getElementById("folderName").value === "") {
+          alert("A nev nem lehet ures");
+          return;
+        }
+        createAnyFile(selectedWindow === "win1" ? "path1" : "path2", "folder");
+      };
+    }
+    else {
+      alert("Nincs kivalasztva ablak");
+    }
   }
   if (pressedKey.key === "F4") {
     pressedKey.preventDefault();
@@ -79,9 +87,36 @@ document.addEventListener("keydown", function (pressedKey) {
     if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
       createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
       showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
+
+      let saveButton = document.getElementById("saveButton");
+      if (saveButton) {
+        saveButton.onclick = function () {
+          modifyTxtContent(selectedFile.name, selectedPath);
+          closeMenu("showContent");
+        };
+      }
     }
     else {
       alert("Ezt nem lehet modoositani");
+    }
+  }
+  if (pressedKey.key === "F3") {
+    pressedKey.preventDefault();
+    let edit = document.getElementById("contentDiv");
+    if (!selectedFile) {
+      alert("Nincs kivalasztva file");
+      return;
+    }
+    if (selectedFile.extension === "png" || selectedFile.extension === "jpg") {
+      showImg(selectedFile.content, selectedFile.name, selectedFile.extension);
+    }
+    else if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
+      createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
+      showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
+      edit.contentEditable = false;
+    }
+    else {
+      alert("Ezt nem lehet megtekinteni");
     }
   }
 });
@@ -252,6 +287,20 @@ function loadData(tbodyId, pathId) {
 
       row.onclick = function () {
         let fileName = row.cells[0].textContent.trim();
+        //TODO: implement multiple file selection (somewhat done just bugged AF)
+        document.addEventListener("keydown", function (pressedKey) {
+          if (pressedKey.key === "Control") {
+            pressedKey.preventDefault();
+            row.style.backgroundColor = "lightblue";
+            if (!selectedRows.includes(row)) {
+              selectedRows.push(row);
+              selectedFiles.push(getCurrentFolder(pathId).files.find((folder) => folder.name === fileName));
+            }
+            selectedPath = pathId;
+            selectedRow = row;
+          }
+          return;
+        });
 
         if (selectedRow == row) {
           selectedRow.style.backgroundColor = "";
@@ -260,12 +309,17 @@ function loadData(tbodyId, pathId) {
           selectedPath = null;
           return;
         }
-        else if (selectedRow) {
+        else if (selectedRow || selectedRows.length > 0) {
           selectedRow.style.backgroundColor = "";
           row.style.backgroundColor = "lightblue";
           selectedRow = row;
           selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
           selectedPath = pathId;
+          selectedRows.forEach((row) => {
+            row.style.backgroundColor = "";
+          });
+          selectedRows = [];
+          selectedFiles = [];
           return;
         }
         else {
@@ -379,6 +433,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // right click event handler
   windows.forEach((window) => {
+    window.addEventListener("click", function () {
+      if (selectedWindow) {
+        let ablak = document.getElementById(selectedWindow);
+        ablak.style.border = "none";
+      }
+      selectedWindow = window.id;
+      let ablak = document.getElementById(window.id);
+      ablak.style.border = "4px solid lightblue";
+    });
     window.addEventListener("contextmenu", function (event) {
       event.preventDefault();
 

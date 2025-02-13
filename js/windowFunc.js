@@ -104,6 +104,8 @@ function maximizeWindow(windowId) {
  * @param {string} menuId - ID of menu element to close
  */
 function closeMenu(menuId) {
+  let edit = document.getElementById('contentDiv');
+  edit.contentEditable = true;
   if (fullscreen) {
     fullscreen = false;
   }
