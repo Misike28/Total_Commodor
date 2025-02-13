@@ -87,6 +87,27 @@
                             "size": "1kb",
                             "date": "2025-01-30",
                             "content": "img/vince.png"
+                        },
+                        {
+                            "name": "Miku",
+                            "extension": "png",
+                            "size": "1kb",
+                            "date": "2025-01-30",
+                            "content": "img/Miku.png"
+                        },
+                        {
+                            "name": "MR BEAAAST",
+                            "extension": "jpg",
+                            "size": "1kb",
+                            "date": "2025-01-30",
+                            "content": "img/bestiaur.jpg"
+                        },
+                        {
+                            "name": "wtf",
+                            "extension": "png",
+                            "size": "1kb",
+                            "date": "2025-01-30",
+                            "content": "img/wtf.png"
                         }
                     ]
                 }

@@ -58,10 +58,15 @@ function tableResizing() {
 
 document.addEventListener("keydown", function (pressedKey) {
   if (pressedKey.key === "Delete" || pressedKey.key === "F8" && selectedFile) {
+    document.getElementById("deleteButton").onclick = function deleteclick(){
+      pressedKey.preventDefault();
+      deleteFile(selectedFile.name, selectedPath);
+    }
     pressedKey.preventDefault();
     deleteFile(selectedFile.name, selectedPath);
   }
   if (pressedKey.key === "F7") {
+    document.getElementById("createFolderButton").onclick = function folderclick(){
     pressedKey.preventDefault();
     if (selectedWindow) {
       createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
@@ -78,7 +83,24 @@ document.addEventListener("keydown", function (pressedKey) {
       alert("Nincs kivalasztva ablak");
     }
   }
+  pressedKey.preventDefault();
+  if (selectedWindow) {
+    createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
+    let createFolderS = document.getElementById("create");
+    createFolderS.onclick = function () {
+      if (document.getElementById("folderName").value === "") {
+        alert("A nev nem lehet ures");
+        return;
+      }
+      createAnyFile(selectedWindow === "win1" ? "path1" : "path2", "folder");
+    };
+  }
+  else {
+    alert("Nincs kivalasztva ablak");
+  }
+  }
   if (pressedKey.key === "F4") {
+    document.getElementById("editButton").onclick = function editclick(){
     pressedKey.preventDefault();
     if (!selectedFile) {
       alert("Nincs kivalasztva file");
@@ -100,7 +122,28 @@ document.addEventListener("keydown", function (pressedKey) {
       alert("Ezt nem lehet modoositani");
     }
   }
-  if (pressedKey.key === "F3") {
+  pressedKey.preventDefault();
+  if (!selectedFile) {
+    alert("Nincs kivalasztva file");
+    return;
+  }
+  if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
+    createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
+    showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
+
+    let saveButton = document.getElementById("saveButton");
+    if (saveButton) {
+      saveButton.onclick = function () {
+        modifyTxtContent(selectedFile.name, selectedPath);
+        closeMenu("showContent");
+      };
+    }
+  }
+  else {
+    alert("Ezt nem lehet módosítani");
+  }
+}  if (pressedKey.key === "F3") {
+    document.getElementById("viewButton").onclick = function viewclick(){
     pressedKey.preventDefault();
     let edit = document.getElementById("contentDiv");
     if (!selectedFile) {
@@ -119,6 +162,25 @@ document.addEventListener("keydown", function (pressedKey) {
       alert("Ezt nem lehet megtekinteni");
     }
   }
+  pressedKey.preventDefault();
+  let edit = document.getElementById("contentDiv");
+  if (!selectedFile) {
+    alert("Nincs kivalasztva file");
+    return;
+  }
+  if (selectedFile.extension === "png" || selectedFile.extension === "jpg") {
+    showImg(selectedFile.content, selectedFile.name, selectedFile.extension);
+  }
+  else if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
+    createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
+    showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
+    edit.contentEditable = false;
+  }
+  else {
+    alert("Ezt nem lehet megtekinteni");
+  }
+}
+
 });
 
 /**
@@ -375,6 +437,14 @@ function loadData(tbodyId, pathId) {
           let deleteButton = document.getElementById("delButton");
           deleteButton.onclick = function () {
             deleteFile(file.name, pathId);
+          };
+        };
+        let createCopyMenu = document.getElementById("copyFile");
+        createCopyMenu.onclick = function () {
+          createMenu(event.pageX, event.pageY, "copy");
+          let copyButton = document.getElementById("copyButton");
+          copyButton.onclick = function () {
+            copyFile(file.name, pathId);
           };
         };
       };
@@ -695,4 +765,12 @@ function deleteFile(fileName, pathId) {
 
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
+}
+
+function copyFile(fileName, pathId){
+  const currentFolder = getCurrentFolder(pathId);
+  const indexToCopy = currentFolder.files.findIndex(item => item.name === fileName);
+  console.log(indexToCopy);
+  console.log(pathID);
+
 }
