@@ -4,10 +4,10 @@ var lastlemez1 = "C";
 var lastlemez2 = "C";
 var selectedRow = null;
 var selectedFile = null;
-var selectedPath = null;
+var selectedPaths = null;
 var selectedWindow = null;
 var selectedRows = [];
-var selectedFiles = [];
+var selectedFiles = {};
 // Data fetching and loading data into tables
 document.addEventListener("DOMContentLoaded", async function () {
   await fetch("./data.json")
@@ -55,133 +55,6 @@ function tableResizing() {
     }
   });
 }
-
-document.addEventListener("keydown", function (pressedKey) {
-  if (pressedKey.key === "Delete" || pressedKey.key === "F8" && selectedFile) {
-    document.getElementById("deleteButton").onclick = function deleteclick(){
-      pressedKey.preventDefault();
-      deleteFile(selectedFile.name, selectedPath);
-    }
-    pressedKey.preventDefault();
-    deleteFile(selectedFile.name, selectedPath);
-  }
-  if (pressedKey.key === "F7") {
-    document.getElementById("createFolderButton").onclick = function folderclick(){
-    pressedKey.preventDefault();
-    if (selectedWindow) {
-      createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
-      let createFolderS = document.getElementById("create");
-      createFolderS.onclick = function () {
-        if (document.getElementById("folderName").value === "") {
-          alert("A nev nem lehet ures");
-          return;
-        }
-        createAnyFile(selectedWindow === "win1" ? "path1" : "path2", "folder");
-      };
-    }
-    else {
-      alert("Nincs kivalasztva ablak");
-    }
-  }
-  pressedKey.preventDefault();
-  if (selectedWindow) {
-    createMenu(pressedKey.pageX, pressedKey.pageY, "folderCreate");
-    let createFolderS = document.getElementById("create");
-    createFolderS.onclick = function () {
-      if (document.getElementById("folderName").value === "") {
-        alert("A nev nem lehet ures");
-        return;
-      }
-      createAnyFile(selectedWindow === "win1" ? "path1" : "path2", "folder");
-    };
-  }
-  else {
-    alert("Nincs kivalasztva ablak");
-  }
-  }
-  if (pressedKey.key === "F4") {
-    document.getElementById("editButton").onclick = function editclick(){
-    pressedKey.preventDefault();
-    if (!selectedFile) {
-      alert("Nincs kivalasztva file");
-      return;
-    }
-    if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
-      createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
-      showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
-
-      let saveButton = document.getElementById("saveButton");
-      if (saveButton) {
-        saveButton.onclick = function () {
-          modifyTxtContent(selectedFile.name, selectedPath);
-          closeMenu("showContent");
-        };
-      }
-    }
-    else {
-      alert("Ezt nem lehet modoositani");
-    }
-  }
-  pressedKey.preventDefault();
-  if (!selectedFile) {
-    alert("Nincs kivalasztva file");
-    return;
-  }
-  if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
-    createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
-    showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
-
-    let saveButton = document.getElementById("saveButton");
-    if (saveButton) {
-      saveButton.onclick = function () {
-        modifyTxtContent(selectedFile.name, selectedPath);
-        closeMenu("showContent");
-      };
-    }
-  }
-  else {
-    alert("Ezt nem lehet módosítani");
-  }
-}  if (pressedKey.key === "F3") {
-    document.getElementById("viewButton").onclick = function viewclick(){
-    pressedKey.preventDefault();
-    let edit = document.getElementById("contentDiv");
-    if (!selectedFile) {
-      alert("Nincs kivalasztva file");
-      return;
-    }
-    if (selectedFile.extension === "png" || selectedFile.extension === "jpg") {
-      showImg(selectedFile.content, selectedFile.name, selectedFile.extension);
-    }
-    else if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
-      createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
-      showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
-      edit.contentEditable = false;
-    }
-    else {
-      alert("Ezt nem lehet megtekinteni");
-    }
-  }
-  pressedKey.preventDefault();
-  let edit = document.getElementById("contentDiv");
-  if (!selectedFile) {
-    alert("Nincs kivalasztva file");
-    return;
-  }
-  if (selectedFile.extension === "png" || selectedFile.extension === "jpg") {
-    showImg(selectedFile.content, selectedFile.name, selectedFile.extension);
-  }
-  else if (selectedFile.extension === "txt" || selectedFile.extension === "html") {
-    createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
-    showContent(selectedFile.content, selectedFile.name, selectedFile.extension);
-    edit.contentEditable = false;
-  }
-  else {
-    alert("Ezt nem lehet megtekinteni");
-  }
-}
-
-});
 
 /**
  * Toggles visibility of a dropdown menu
@@ -314,7 +187,6 @@ function loadData(tbodyId, pathId) {
 
       }
 
-
       row.appendChild(nameCell);
 
       const extensionCell = document.createElement("td");
@@ -347,11 +219,11 @@ function loadData(tbodyId, pathId) {
       dateCell.textContent = file.date;
       row.appendChild(dateCell);
 
-      let isControlPressed = false;
+      let controlPressed = false;
 
       document.addEventListener("keydown", function (pressedKey) {
         if (pressedKey.key === "Control") {
-          isControlPressed = true;
+          controlPressed = true;
         }
       });
 
@@ -363,38 +235,49 @@ function loadData(tbodyId, pathId) {
 
       row.onclick = function () {
         let fileName = row.cells[0].textContent.trim();
+        let newWindow = pathId === "path1" ? "win1" : "win2";
 
-        if (isControlPressed) {
+        if (selectedWindow !== newWindow) {
+          if (selectedWindow) {
+            document.getElementById(selectedWindow).classList.remove('window-selected');
+          }
+          document.getElementById(newWindow).classList.add('window-selected');
+          selectedWindow = newWindow;
+        }
+
+        if (controlPressed) {
           row.style.backgroundColor = "lightblue";
+          if (selectedRow) {
+            selectedRows.push(selectedRow);
+            selectedFiles[selectedRow.cells[0].textContent.trim()] = selectedPaths;
+          }
           if (!selectedRows.includes(row)) {
             selectedRows.push(row);
-            selectedFiles.push(getCurrentFolder(pathId).files.find((folder) => folder.name === fileName));
+            selectedFiles[fileName] = pathId;
+            selectedPaths = pathId;
+            console.log(selectedFiles);
           }
-          selectedPath = pathId;
-        }
-        else {
+        } else {
           selectedRows.forEach((row) => {
             row.style.backgroundColor = "";
           });
           selectedRows = [];
-          selectedFiles = [];
+
           if (selectedRow == row) {
             selectedRow.style.backgroundColor = "";
             selectedRow = null;
             selectedFile = null;
-            selectedPath = null;
-          } else if (selectedRow) {
-            selectedRow.style.backgroundColor = "";
-            row.style.backgroundColor = "lightblue";
-            selectedRow = row;
-            selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
-            selectedPath = pathId;
           } else {
+            if (selectedRow) {
+              selectedRow.style.backgroundColor = "";
+            }
             row.style.backgroundColor = "lightblue";
             selectedRow = row;
-            selectedFile = getCurrentFolder(pathId).files.find((folder) => folder.name === fileName);
-            selectedPath = pathId;
+            selectedFile = getCurrentFolder(pathId).files.find(
+              (folder) => folder.name === fileName
+            );
           }
+          selectedPaths = pathId;
         }
       };
 
@@ -509,15 +392,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // right click event handler
   windows.forEach((window) => {
-    window.addEventListener("click", function () {
-      if (selectedWindow) {
-        let ablak = document.getElementById(selectedWindow);
-        ablak.style.border = "none";
-      }
-      selectedWindow = window.id;
-      let ablak = document.getElementById(window.id);
-      ablak.style.border = "4px solid lightblue";
-    });
     window.addEventListener("contextmenu", function (event) {
       event.preventDefault();
 
@@ -773,16 +647,16 @@ function deleteFile(fileName, pathId) {
   loadData("tbody2", "path2");
 }
 
-function copyFile(fileName, pathId){
+function copyFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
   const indexToCopy = currentFolder.files.find(item => item.name === fileName);
   let ext = indexToCopy.extension
 
 
   let id = "path1"
-  if(pathId=="path1"){
-    id="path2"
+  if (pathId == "path1") {
+    id = "path2"
   }
-  document.getElementById("fileName").value=indexToCopy.name;
-  createAnyFile(id,ext)
+  document.getElementById("fileName").value = indexToCopy.name;
+  createAnyFile(id, ext)
 }

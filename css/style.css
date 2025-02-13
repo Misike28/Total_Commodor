@@ -193,6 +193,6 @@ th .resizer {
     height: 100% !important;
 }
 
-
-
-  
+.window-selected {
+    border: 4px solid lightblue;
+}
