@@ -39,11 +39,11 @@ body {
 }
 
 .window {
-    width: 50%;
-    border-radius: 5px;
+    width: 100%;
     background-color: whitesmoke;
     overflow: auto;
     border: 1px solid grey;
+    position: relative;
 }
 
 .middle {
@@ -85,7 +85,17 @@ th {
     min-width: 50px;
 }
 
-th .resizer, .window .resizer{
+th .resizer{
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+    cursor: col-resize;
+    background-color: grey;
+}
+
+.window .resizer {
     position: absolute;
     right: 0;
     top: 0;
@@ -99,9 +109,8 @@ th .resizer, .window .resizer{
     display: flex;
     flex-direction: row;
     padding: 5px;
-    width: 50%;
+    width: 100%;
     background-color: whitesmoke;
-    border: 1px solid grey;
     position: relative;
 }
 
@@ -194,5 +203,10 @@ th .resizer, .window .resizer{
 }
 
 .window-selected {
-    border: 4px solid lightblue;
+    background-color: lightblue;
+}
+
+#leftPath {
+    border-right: 5px solid #444B72;
+    padding-right: 0px;
 }

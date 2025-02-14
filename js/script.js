@@ -35,8 +35,8 @@ function tableResizing() {
     function initResize(e) {
       startX = e.clientX;
       resizerParent = resizer.parentElement;
+      pathResize = document.getElementById("leftPath");
       startWidth = resizerParent.offsetWidth;
-      console.log(resizerParent);
       document.documentElement.addEventListener("mousemove", doResize);
       document.documentElement.addEventListener("mouseup", stopResize);
     }
@@ -44,6 +44,9 @@ function tableResizing() {
     function doResize(e) {
       const newWidth = startWidth + (e.clientX - startX);
       if (newWidth > 50) {
+        pathResize.style.width = newWidth + "px";
+        pathResize.style.minWidth = newWidth + "px";
+        pathResize.style.maxWidth = newWidth + "px";
         resizerParent.style.width = newWidth + "px";
         resizerParent.style.minWidth = newWidth + "px";
         resizerParent.style.maxWidth = newWidth + "px";
@@ -240,9 +243,9 @@ function loadData(tbodyId, pathId) {
 
         if (selectedWindow !== newWindow) {
           if (selectedWindow) {
-            document.getElementById(selectedWindow).classList.remove('window-selected');
+            document.getElementById(selectedWindow == "win1" ? "leftPath" : "rightPath").classList.remove('window-selected');
           }
-          document.getElementById(newWindow).classList.add('window-selected');
+          document.getElementById(newWindow == "win1" ? "leftPath" : "rightPath").classList.add('window-selected');
           selectedWindow = newWindow;
         }
 
@@ -365,9 +368,9 @@ document.addEventListener("DOMContentLoaded", function () {
   windows.forEach((window) => {
     window.addEventListener("click", function () {
       if (selectedWindow) {
-        document.getElementById(selectedWindow).classList.remove('window-selected');
+        document.getElementById(selectedWindow == "win1" ? "leftPath" : "rightPath").classList.remove('window-selected');
       }
-      document.getElementById(window.id).classList.add('window-selected');
+      document.getElementById(window.id == "win1" ? "leftPath" : "rightPath").classList.add('window-selected');
       selectedWindow = window.id;
     });
   });
