@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async function () {
  * Attaches event listeners to column resizer elements
  */
 function tableResizing() {
-  const resizers = document.querySelectorAll("th .resizer, .middle .resizer");
+  const resizers = document.querySelectorAll("th .resizer, .window .resizer");
   let startX, startWidth, resizerParent;
 
   resizers.forEach((resizer) => {
@@ -36,6 +36,7 @@ function tableResizing() {
       startX = e.clientX;
       resizerParent = resizer.parentElement;
       startWidth = resizerParent.offsetWidth;
+      console.log(resizerParent);
       document.documentElement.addEventListener("mousemove", doResize);
       document.documentElement.addEventListener("mouseup", stopResize);
     }

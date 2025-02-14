@@ -85,7 +85,7 @@ th {
     min-width: 50px;
 }
 
-th .resizer {
+th .resizer, .window .resizer{
     position: absolute;
     right: 0;
     top: 0;
