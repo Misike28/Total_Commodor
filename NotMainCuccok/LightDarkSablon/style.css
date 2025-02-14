@@ -230,11 +230,58 @@ table{
 
 /* Create/Edit Form */
 
-.fileEditForm{
-    width: 80%;
+.fileEdit{
+    display: none;
+    position: absolute;
+    width: 40%;
+    padding: 20px;
     background-color: #CDC1FF;
-    border: 1px solid #A594F9;
+    border: 2px solid #A594F9;
     border-radius: 25px;
+}
+
+.fileEdit-body{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fileEdit-body input{
+    border: none;
+    background-color: #CDC1FF;
+    border-bottom: 2px solid #A594F9;
+    width: 80%;
+    margin-bottom: 20px;
+    transition: background-color 0.1s linear;
+}
+
+.fileEdit-body input:focus{
+    outline: none;
+}
+
+.fileEdit-body input:hover{
+    background-color: #A594F9;
+}
+
+.fileEditButton-Container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+}
+
+.fileEditButton-Container button{
+    border-radius: 25px;
+    background-color: #CDC1FF;
+    border: 3px solid #A594F9;
+    width: 40%;
+    transition: all 0.1s linear;
+    height: 100%;
+}
+
+.fileEditButton-Container button:hover{
+    background-color: #A594F9;
 }
 
 /* Theme switch */

@@ -26,23 +26,54 @@ document.addEventListener("DOMContentLoaded", function () {
       window.addEventListener("contextmenu", function (event) {
         event.preventDefault();
 
+        var fileMethod = "";
+
         // File creation menu
         var contextMenu = document.getElementById("fileCreationMenu");
         contextMenu.style.display = "block";
         contextMenu.style.left = event.pageX + "px";
         contextMenu.style.top = event.pageY + "px";
   
-        // Folder creation menu
+        // Folder creation button
         let createFolderMen = document.getElementById("createFolder");
         createFolderMen.onclick = function () {
-          createMenu(event.pageX, event.pageY, "folderCreate");
+          fileMethod = "CreateFolder";
+          document.getElementById("fileEdit-title").innerHTML = "Adja meg a mappa nevét!"
+          createMenu(event.pageX, event.pageY);
         };
   
-        // File creation menu
+        // File creation button
         let createFileMen = document.getElementById("createFile");
         createFileMen.onclick = function () {
-          createMenu(event.pageX, event.pageY, "fileCreate");
+          fileMethod = "CreateFile";
+          document.getElementById("fileEdit-title").innerHTML = "Adja meg a file nevét!"
+          createMenu(event.pageX, event.pageY);
         };
+
+        document.getElementById("cancel").onclick = function () {
+          closeMenu();
+        }
+
+        // folyt - egyszerűbb file/folder creation egybe
+        document.getElementById("confirm").onclick = function () {
+
+          let name = document.getElementById("fileEditInput").value
+          if(name === "") {
+            closeMenu();
+            return;
+          }
+
+          switch(fileMethod){
+            case "CreateFolder":
+              console.log(name);
+              break;
+            case "CreateFile":
+              
+              break;
+          }
+
+          closeMenu();
+        }
   
         // folder creation
         let createFolderS = document.getElementById("create");
@@ -53,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
           createAnyFile(window.id === "win1" ? "left-path" : "right-path", "folder");
         };
-  
+
         // file creation
         let createFileS = document.getElementById("createFileButton");
         createFileS.onclick = function () {
@@ -75,14 +106,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  function createMenu(posX, posY, menuId) {
-    let createMenu = document.getElementById(menuId);
+  function createMenu(posX, posY) {
+    let createMenu = document.getElementById("fileEdit");
     createMenu.style.display = "block";
     createMenu.style.left = posX + "px";
     createMenu.style.top = posY + "px";
   }
   
-  function closeMenu(menuId) {
-    let createFolderMenu = document.getElementById(menuId);
+  function closeMenu() {
+    let createFolderMenu = document.getElementById("fileEdit");
     createFolderMenu.style.display = "none";
   }

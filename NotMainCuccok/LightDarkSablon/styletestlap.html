@@ -40,49 +40,23 @@
                     <div contenteditable="true" class="path" id="left-path"></div>
                 </div>
                 <div class="application-window window-left" id="window-left">
-                    <table>
-                        <tr style="border-bottom: 1px solid black;">
-                            <th>Név</th>
-                            <th>Formátum</th>
-                            <th>Méret</th>
-                            <th>Dátum</th>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
-                        <tr class="file">
-                            <td>Szar</td>
-                            <td>Szöveges dokumentum (.txt)</td>
-                            <td>10.2Mb</td>
-                            <td>2002-02-12</td>
-                        </tr>
+                    <table class="content-table table-left" id="table-left">
+                        <thead>
+                            <tr>
+                                <th>Név</th>
+                                <th>Formátum</th>
+                                <th>Méret</th>
+                                <th>Dátum</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-left-body">
+                            <tr class="file">
+                                <td>Szar</td>
+                                <td>Szöveges dokumentum (.txt)</td>
+                                <td>10.2Mb</td>
+                                <td>2002-02-12</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -104,7 +78,24 @@
                     <div contenteditable="true" class="path" id="right-path"></div>
                 </div>
                 <div class="application-window window-right" id="window-right">
-                
+                    <table class="content-table table-right" id="table-right">
+                        <thead>
+                            <tr>
+                                <th>Név</th>
+                                <th>Formátum</th>
+                                <th>Méret</th>
+                                <th>Dátum</th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-right-body">
+                            <tr class="file">
+                                <td>Szar</td>
+                                <td>Szöveges dokumentum (.txt)</td>
+                                <td>10.2Mb</td>
+                                <td>2002-02-12</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -120,48 +111,16 @@
             <div class="menuItem">Delete</div>
         </div>
 
-        <div class="fileEditForm">
-            <h2>Funkciónév</h2>
-            <input type="text">
-            <div class="fileEditFormButtonContainer">
-                <button>Cancel</button>
-                <button></button>
+        <div class="fileEdit" id="fileEdit">
+            <div class="fileEdit-header">
+                <h2 id="fileEdit-title">Funkciónév</h2>
             </div>
-            
-        </div>
-
-         
-        <!-- áthozott -->
-    
-        <div class="folderCreate" id="folderCreate">
-            <div>
-                <input type="text" id="folderName" placeholder="Folder Name">
-                <button id="create">Create</button>
-                <button onclick="closeMenu('folderCreate')">Close</button>
-            </div>
-        </div>
-    
-        <div class="folderCreate" id="fileCreate">
-            <div>
-                <input type="text" id="fileName" placeholder="File Name">
-                <input type="text" id="extension" placeholder="File Extension">
-                <button id="createFileButton">Create</button>
-                <button onclick="closeMenu('fileCreate')">Close</button>
-            </div>
-        </div>
-    
-        <div class="folderCreate" id="modify">
-            <div>
-                <input type="text" id="modName" placeholder="New Name">
-                <button id="modButton">Modify</button>
-                <button onclick="closeMenu('modify')">Close</button>
-            </div>
-        </div>
-    
-        <div class="folderCreate" id="delete">
-            <div>
-                <button id="delButton">Delete</button>
-                <button onclick="closeMenu('delete')">Close</button>
+            <div class="fileEdit-body">
+                <input type="text" id="fileEditInput">
+                <div class="fileEditButton-Container">
+                    <button id="cancel">Cancel</button>
+                    <button id="confirm">Done</button>
+                </div>
             </div>
         </div>
     </div>
