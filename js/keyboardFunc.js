@@ -6,6 +6,7 @@ function deleteclick() {
     if (Object.keys(selectedFiles).length > 0) {
 
         for (const [fileName, pathId] of Object.entries(selectedFiles)) {
+            console.log(fileName, pathId);
             deleteFile(fileName, pathId);
         }
         

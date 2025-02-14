@@ -250,6 +250,7 @@ function loadData(tbodyId, pathId) {
           if (selectedRow) {
             selectedRows.push(selectedRow);
             selectedFiles[selectedRow.cells[0].textContent.trim()] = selectedPaths;
+            selectedRow = null;
           }
           if (!selectedRows.includes(row)) {
             selectedRows.push(row);
@@ -358,6 +359,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("win2"),
   ];
 
+
+  // select current window
+  windows.forEach((window) => {
+    window.addEventListener("click", function () {
+      if (selectedWindow) {
+        document.getElementById(selectedWindow).classList.remove('window-selected');
+      }
+      document.getElementById(window.id).classList.add('window-selected');
+      selectedWindow = window.id;
+    });
+  });
   // path keyboard event handler
   editableDiv.forEach((div) => {
     div.addEventListener("keypress", function (event) {
@@ -553,6 +565,11 @@ function createAnyFile(pathId, extension) {
     extension === "folder"
       ? document.getElementById("folderName").value
       : document.getElementById("fileName").value;
+
+  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+    alert("A fajl mar letezik");
+    return;
+  }
 
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
