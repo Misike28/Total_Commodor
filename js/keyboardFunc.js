@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("viewButton").onclick = viewclick;
 });
 
+
 function deleteclick() {
     if (Object.keys(selectedFiles).length > 0) {
 

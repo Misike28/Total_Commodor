@@ -117,6 +117,8 @@
         <div class="but">
             <button id="viewButton">F3 View</button>
             <button id="editButton">F4 Edit</button>
+            <button id="copybutton">F5 Copy</button>
+            <button id="movebutton">F6 Move</button>
             <button id="createFolderButton">F7 Create Folder</button>
             <button id="deleteButton">F8 Delete</button>
         </div>
@@ -144,6 +146,9 @@
             </div>
             <div class="item" id="copyFile">
                 <P>Copy File</P>
+            </div>
+            <div class="item" id="moveFile">
+                <P>Move File</P>
             </div>
         </div>
     </div>
@@ -195,6 +200,13 @@
         <div>
             <button id="copyButton">Copy</button>
             <button onclick="closeMenu('copy')">Close</button>
+        </div>
+    </div>
+
+    <div class="folderCreate" id="move">
+        <div>
+            <button id="moveButton">Move</button>
+            <button onclick="closeMenu('move')">Close</button>
         </div>
     </div>
 

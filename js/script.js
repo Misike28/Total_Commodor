@@ -214,6 +214,28 @@ function loadData(tbodyId, pathId) {
         }
         sizeCell.textContent = meret + meretbyte;
       }
+      else if(file.extension == "png" || file.extension == "jpg"){
+        showImg(file.content, file.name, file.extension);
+        closeMenu('showContent2');
+        let magas = 700;
+        let hossz = 700;
+        let meret = magas*hossz*24*8;
+        let meretbyte = "B";
+
+        if(meret>1024){
+          meretbyte = "KB"
+          meret=meret/1024
+          Math.round(meret * 10) / 10
+        }
+        if(meret>1024){
+          meretbyte = "MB"
+          meret=meret/1024
+          meret=Math.round(meret * 10) / 10
+        }
+        sizeCell.textContent = meret + meretbyte;
+
+
+      }
       else {
         sizeCell.textContent = file.size;
       }
@@ -341,6 +363,14 @@ function loadData(tbodyId, pathId) {
             copyFile(file.name, pathId);
           };
         };
+        let createMoveMenu = document.getElementById("moveFile");
+        createMoveMenu.onclick = function () {
+          createMenu(event.pageX, event.pageY, "move");
+          let moveButton = document.getElementById("moveButton");
+          moveButton.onclick = function () {
+            moveFile(file.name, pathId);
+          };
+        };
       };
 
       document.addEventListener("click", function () {
@@ -422,7 +452,6 @@ document.addEventListener("DOMContentLoaded", function () {
       createFolderMen.onclick = function () {
         createMenu(event.pageX, event.pageY, "folderCreate");
       };
-
       // File creation menu
       let createFileMen = document.getElementById("createFile");
       createFileMen.onclick = function () {
@@ -679,5 +708,64 @@ function copyFile(fileName, pathId) {
     id = "path2"
   }
   document.getElementById("fileName").value = indexToCopy.name;
-  createAnyFile(id, ext)
+  let content;
+  if(ext=="folder"){
+    content=indexToCopy.files;
+  }
+  else{
+    content=indexToCopy.content
+  }
+  console.log(content)
+  CreateCopy(indexToCopy.name,id,ext,content)
+}
+
+function CreateCopy(name,pathId,extension,content){
+  let folderName = name;
+
+if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+  alert("A fajl mar letezik");
+  return;
+}
+
+const currentFolder = getCurrentFolder(pathId);
+let fileSize =
+  extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
+  
+
+currentFolder.files.push({
+  name: folderName,
+  extension: extension,
+  size: fileSize,
+  date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+  ...(extension === "folder" ? { files: content } : { content: content }),
+
+});
+loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
+}
+
+function moveFile(fileName, pathId){
+
+  const currentFolder = getCurrentFolder(pathId);
+  const indexToCopy = currentFolder.files.find(item => item.name === fileName);
+  let ext = indexToCopy.extension
+
+
+  let id = "path1"
+  if (pathId == "path1") {
+    id = "path2"
+  }
+  document.getElementById("fileName").value = indexToCopy.name;
+  let content;
+  if(ext=="folder"){
+    content=indexToCopy.files;
+  }
+  else{
+    content=indexToCopy.content
+  }
+  console.log(content)
+  CreateCopy(indexToCopy.name,id,ext,content)
+  const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
+  currentFolder.files.splice(indexToDelete, 1);
+  loadData("tbody1", "path1");
+  loadData("tbody2", "path2");
 }
