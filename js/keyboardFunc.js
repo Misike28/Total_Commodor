@@ -106,10 +106,10 @@ document.addEventListener("keydown", function (pressedKey) {
         pressedKey.preventDefault();
         if(selectedFile){
             moveFile(selectedFile.name,selectedPaths)
-            }
-            else{
+        }
+        else{
                 alert("Válassz már ki egy filet te szerencsétlen")
-            }
+        }
 
     }
     if(pressedKey.key==="F5"){

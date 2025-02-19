@@ -255,7 +255,7 @@ function loadData(tbodyId, pathId) {
 
       document.addEventListener("keyup", function (pressedKey) {
         if (pressedKey.key === "Control") {
-          isControlPressed = false;
+          controlPressed = false;
         }
       });
 
@@ -600,8 +600,9 @@ function createAnyFile(pathId, extension) {
       : document.getElementById("fileName").value;
 
   if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-    alert("A fajl mar letezik");
-    return;
+  var i =  getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension) 
+  console.log(i)
+    folderName=folderName+"("+i.length+")"
   }
 
   const currentFolder = getCurrentFolder(pathId);
@@ -723,8 +724,9 @@ function CreateCopy(name,pathId,extension,content){
   let folderName = name;
 
 if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-  alert("A fajl mar letezik");
-  return;
+  var i =  getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension) 
+  console.log(i)
+    folderName=folderName+"("+i.length+")"
 }
 
 const currentFolder = getCurrentFolder(pathId);
