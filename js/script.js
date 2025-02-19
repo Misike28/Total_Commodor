@@ -215,16 +215,28 @@ function loadData(tbodyId, pathId) {
         sizeCell.textContent = meret + meretbyte;
       }
       else if(file.extension == "png" || file.extension == "jpg"){
-        showImg(file.content, file.name, file.extension);
-        closeMenu('showContent2');
-        let magas = 700;
-        let hossz = 700;
-        let meret = magas*hossz*24*8;
+
+        var openedFile = document.getElementById("openedFileName2");
+        var imageParent = document.getElementById("Temp");
+        imageParent.innerHTML = "";
+      
+        var image = document.createElement("img");
+        var filenev = file.name + "." + file.extension;
+        image.id = filenev;
+      
+        image.src = file.content;
+        image.alt = filenev;
+        imageParent.appendChild(image);
+        openedFile.textContent = filenev;
+
+        const magas = image.naturalWidth;
+        const hossz = image.naturalHeight;
+        let meret = magas*hossz;
         let meretbyte = "B";
 
-        if(meret>1024){
+        if(meret>1000){
           meretbyte = "KB"
-          meret=meret/1024
+          meret=meret/1000
           Math.round(meret * 10) / 10
         }
         if(meret>1024){
@@ -232,6 +244,7 @@ function loadData(tbodyId, pathId) {
           meret=meret/1024
           meret=Math.round(meret * 10) / 10
         }
+        meret=Math.round(meret * 10) / 10
         sizeCell.textContent = meret + meretbyte;
 
 
@@ -599,7 +612,7 @@ function createAnyFile(pathId, extension) {
       ? document.getElementById("folderName").value
       : document.getElementById("fileName").value;
 
-  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName ) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
   var i =  getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension) 
   console.log(i)
     folderName=folderName+"("+i.length+")"
