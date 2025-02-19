@@ -102,6 +102,26 @@ document.addEventListener("keydown", function (pressedKey) {
         pressedKey.preventDefault();
         createClick(pressedKey);
     }
+    if(pressedKey.key==="F6"){
+        pressedKey.preventDefault();
+        if(selectedFile){
+            moveFile(selectedFile.name,selectedPaths)
+            }
+            else{
+                alert("Válassz már ki egy filet te szerencsétlen")
+            }
+
+    }
+    if(pressedKey.key==="F5"){
+        pressedKey.preventDefault();
+        console.log(selectedFile)
+        if(selectedFile){
+        copyFile(selectedFile.name,selectedPaths)
+        }
+        else{
+            alert("Válassz már ki egy filet te szerencsétlen")
+        }
+    }
     if (pressedKey.key === "F4") {
         pressedKey.preventDefault();
         editclick(pressedKey);
