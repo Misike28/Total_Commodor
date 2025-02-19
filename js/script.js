@@ -214,16 +214,16 @@ function loadData(tbodyId, pathId) {
         }
         sizeCell.textContent = meret + meretbyte;
       }
-      else if(file.extension == "png" || file.extension == "jpg"){
+      else if (file.extension == "png" || file.extension == "jpg") {
 
         var openedFile = document.getElementById("openedFileName2");
         var imageParent = document.getElementById("Temp");
         imageParent.innerHTML = "";
-      
+
         var image = document.createElement("img");
         var filenev = file.name + "." + file.extension;
         image.id = filenev;
-      
+
         image.src = file.content;
         image.alt = filenev;
         imageParent.appendChild(image);
@@ -231,20 +231,20 @@ function loadData(tbodyId, pathId) {
 
         const magas = image.naturalWidth;
         const hossz = image.naturalHeight;
-        let meret = magas*hossz;
+        let meret = magas * hossz;
         let meretbyte = "B";
 
-        if(meret>1000){
+        if (meret > 1000) {
           meretbyte = "KB"
-          meret=meret/1000
+          meret = meret / 1000
           Math.round(meret * 10) / 10
         }
-        if(meret>1024){
+        if (meret > 1024) {
           meretbyte = "MB"
-          meret=meret/1024
-          meret=Math.round(meret * 10) / 10
+          meret = meret / 1024
+          meret = Math.round(meret * 10) / 10
         }
-        meret=Math.round(meret * 10) / 10
+        meret = Math.round(meret * 10) / 10
         sizeCell.textContent = meret + meretbyte;
 
 
@@ -612,10 +612,10 @@ function createAnyFile(pathId, extension) {
       ? document.getElementById("folderName").value
       : document.getElementById("fileName").value;
 
-  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName ) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-  var i =  getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension) 
-  console.log(i)
-    folderName=folderName+"("+i.length+")"
+  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+    var i = getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension)
+    console.log(i)
+    folderName = folderName + "(" + i.length + ")"
   }
 
   const currentFolder = getCurrentFolder(pathId);
@@ -723,42 +723,50 @@ function copyFile(fileName, pathId) {
   }
   document.getElementById("fileName").value = indexToCopy.name;
   let content;
-  if(ext=="folder"){
-    content=indexToCopy.files;
+  if (ext == "folder") {
+    content = indexToCopy.files;
   }
-  else{
-    content=indexToCopy.content
+  else {
+    content = indexToCopy.content
   }
   console.log(content)
-  CreateCopy(indexToCopy.name,id,ext,content)
+  CreateCopy(indexToCopy.name, id, ext, content)
 }
 
-function CreateCopy(name,pathId,extension,content){
+function CreateCopy(name, pathId, extension, content) {
   let folderName = name;
 
-if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-  var i =  getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension) 
-  console.log(i)
-    folderName=folderName+"("+i.length+")"
+  // if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+  // var i = getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension)
+  // console.log(i)
+  // folderName = folderName + "(" + i.length + ")"
+  // }
+
+  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
+    let justName = name.split(" ")
+    justName = justName.splice(0, justName.length).join(" ")
+    console.log(justName)
+    var i = getCurrentFolder(pathId).files.filter((file) => file.name.includes(justName)).filter((file) => file.extension === extension)
+    folderName = justName + " (" + i.length + ")"
+  }
+
+  const currentFolder = getCurrentFolder(pathId);
+  let fileSize =
+    extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
+
+
+  currentFolder.files.push({
+    name: folderName,
+    extension: extension,
+    size: fileSize,
+    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+    ...(extension === "folder" ? { files: content } : { content: content }),
+
+  });
+  loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
-const currentFolder = getCurrentFolder(pathId);
-let fileSize =
-  extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-  
-
-currentFolder.files.push({
-  name: folderName,
-  extension: extension,
-  size: fileSize,
-  date: new Intl.DateTimeFormat('en-CA').format(new Date()),
-  ...(extension === "folder" ? { files: content } : { content: content }),
-
-});
-loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
-}
-
-function moveFile(fileName, pathId){
+function moveFile(fileName, pathId) {
 
   const currentFolder = getCurrentFolder(pathId);
   const indexToCopy = currentFolder.files.find(item => item.name === fileName);
@@ -771,14 +779,14 @@ function moveFile(fileName, pathId){
   }
   document.getElementById("fileName").value = indexToCopy.name;
   let content;
-  if(ext=="folder"){
-    content=indexToCopy.files;
+  if (ext == "folder") {
+    content = indexToCopy.files;
   }
-  else{
-    content=indexToCopy.content
+  else {
+    content = indexToCopy.content
   }
   console.log(content)
-  CreateCopy(indexToCopy.name,id,ext,content)
+  CreateCopy(indexToCopy.name, id, ext, content)
   const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
   currentFolder.files.splice(indexToDelete, 1);
   loadData("tbody1", "path1");
