@@ -1,246 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Total Commodor</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/windowControlStyles.css">
-    <script src="js/script.js">x</script>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/windowControlStyles.css" />
+    <script src="js/script.js">
+      x
+    </script>
     <script src="js/windowFunc.js"></script>
     <script src="js/keyboardFunc.js"></script>
-    <script src="https://kit.fontawesome.com/26a3e6423d.js" crossorigin="anonymous"></script>
-</head>
+    <script
+      src="https://kit.fontawesome.com/26a3e6423d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-<body>
-
+  <body>
     <div class="main">
+      <div class="header">
+        <h1>Total Commodor 2</h1>
+      </div>
 
-        <div class="header">
-            <h1>Total Commodor 2</h1>
+      <div class="paths">
+        <div class="path" id="leftPath">
+          <span class="dropdown-arrow" onclick="showDropdown('dropdown')"
+            >&#9660;</span
+          >
+          <div contenteditable="true" id="path1">C:\</div>
+          <div class="dropdown-items" id="dropdown">
+            <div
+              class="item"
+              onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path1', 'dropdown')"
+            >
+              <div>
+                <p id="lemez">C</p>
+              </div>
+              <div>
+                <p>C neve</p>
+              </div>
+            </div>
+            <div
+              class="item"
+              onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path1' , 'dropdown')"
+            >
+              <div>
+                <p id="lemez2">D</p>
+              </div>
+              <div>
+                <p>D neve</p>
+              </div>
+            </div>
+          </div>
+          <span class="illuzio"></span>
         </div>
 
-        <div class="paths">
-
-            <div class="path" id="leftPath">
-                <span class="dropdown-arrow" onclick="showDropdown('dropdown')">&#9660;</span>
-                <div contenteditable="true" id="path1">C:\</div>
-                <div class="dropdown-items" id="dropdown">
-                    <div class="item"
-                        onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path1', 'dropdown')">
-                        <div>
-                            <p id="lemez">C</p>
-                        </div>
-                        <div>
-                            <p>C neve</p>
-                        </div>
-                    </div>
-                    <div class="item"
-                        onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path1' , 'dropdown')">
-                        <div>
-                            <p id="lemez2">D</p>
-                        </div>
-                        <div>
-                            <p>D neve</p>
-                        </div>
-                    </div>
-                </div>
-                <span class="illuzio"></span>
+        <div class="path" id="rightPath">
+          <span class="dropdown-arrow" onclick="showDropdown('dropdown1')"
+            >&#9660;</span
+          >
+          <div contenteditable="true" id="path2">D:\</div>
+          <div class="dropdown-items" id="dropdown1">
+            <div
+              class="item"
+              onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path2' , 'dropdown1')"
+            >
+              <div>
+                <p id="lemez">C</p>
+              </div>
+              <div>
+                <p>C neve</p>
+              </div>
             </div>
-
-            <div class="path" id="rightPath">
-                <span class="dropdown-arrow" onclick="showDropdown('dropdown1')">&#9660;</span>
-                <div contenteditable="true" id="path2">D:\</div>
-                <div class="dropdown-items" id="dropdown1">
-                    <div class="item"
-                        onclick="lemezchange(document.getElementById('lemez').innerHTML, 'path2' , 'dropdown1')">
-                        <div>
-                            <p id="lemez">C</p>
-                        </div>
-                        <div>
-                            <p>C neve</p>
-                        </div>
-                    </div>
-                    <div class="item"
-                        onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path2' , 'dropdown1')">
-                        <div>
-                            <p id="lemez2">D</p>
-                        </div>
-                        <div>
-                            <p>D neve</p>
-                        </div>
-                    </div>
-                </div>
+            <div
+              class="item"
+              onclick="lemezchange(document.getElementById('lemez2').innerHTML, 'path2' , 'dropdown1')"
+            >
+              <div>
+                <p id="lemez2">D</p>
+              </div>
+              <div>
+                <p>D neve</p>
+              </div>
             </div>
+          </div>
+        </div>
+      </div>
 
+      <div class="content">
+        <div class="window" id="win1">
+          <table id="table1">
+            <thead>
+              <tr>
+                <th class="name">Name<span class="resizer"></span></th>
+                <th class="Ext">Ext<span class="resizer"></span></th>
+                <th class="Size">Size<span class="resizer"></span></th>
+                <th class="Date">Date</th>
+              </tr>
+            </thead>
+
+            <tbody id="tbody1"></tbody>
+          </table>
+          <span class="resizer valami"></span>
         </div>
 
-        <div class="content">
+        <div class="window" id="win2">
+          <table id="table2">
+            <thead>
+              <tr>
+                <th class="name">Name<span class="resizer"></span></th>
+                <th class="Ext">Ext<span class="resizer"></span></th>
+                <th class="Size">Size<span class="resizer"></span></th>
+                <th class="Date">Date</th>
+              </tr>
+            </thead>
 
-            <div class="window" id="win1">
-                <table id="table1">
-                    <thead>
-                        <tr>
-                            <th class="name">Name<span class="resizer"></span></th>
-                            <th class="Ext">Ext<span class="resizer"></span></th>
-                            <th class="Size">Size<span class="resizer"></span></th>
-                            <th class="Date">Date</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="tbody1">
-
-                    </tbody>
-                </table>
-                <span class="resizer"></span>
-            </div>
-
-            <div class="window" id="win2">
-                <table id="table2">
-                    <thead>
-                        <tr>
-                            <th class="name">Name<span class="resizer"></span></th>
-                            <th class="Ext">Ext<span class="resizer"></span></th>
-                            <th class="Size">Size<span class="resizer"></span></th>
-                            <th class="Date">Date</th>
-                        </tr>
-                    </thead>
-
-                    <tbody id="tbody2">
-
-                    </tbody>
-                </table>
-            </div>
-
+            <tbody id="tbody2"></tbody>
+          </table>
         </div>
-        <div class="but">
-            <button id="viewButton">F3 View</button>
-            <button id="editButton">F4 Edit</button>
-            <button id="copybutton">F5 Copy</button>
-            <button id="movebutton">F6 Move</button>
-            <button id="createFolderButton">F7 Create Folder</button>
-            <button id="deleteButton">F8 Delete</button>
-        </div>
+      </div>
+      <div class="but">
+        <button id="viewButton">F3 View</button>
+        <button id="editButton">F4 Edit</button>
+        <button id="copybutton">F5 Copy</button>
+        <button id="movebutton">F6 Move</button>
+        <button id="createFolderButton">F7 Create Folder</button>
+        <button id="deleteButton">F8 Delete</button>
+      </div>
     </div>
 
-
     <div class="options" id="options">
-        <div>
-            <div class="item" id="createFolder">
-                <p>Create Folder</p>
-            </div>
-            <div class="item" id="createFile">
-                <P>Create File</P>
-            </div>
+      <div>
+        <div class="item" id="createFolder">
+          <p>Create Folder</p>
         </div>
+        <div class="item" id="createFile">
+          <p>Create File</p>
+        </div>
+      </div>
     </div>
 
     <div class="options" id="modOptions">
-        <div>
-            <div class="item" id="modifyFile">
-                <p>Modify file</p>
-            </div>
-            <div class="item" id="deleteFile">
-                <P>Delete File</P>
-            </div>
-            <div class="item" id="copyFile">
-                <P>Copy File</P>
-            </div>
-            <div class="item" id="moveFile">
-                <P>Move File</P>
-            </div>
+      <div>
+        <div class="item" id="modifyFile">
+          <p>Modify file</p>
         </div>
+        <div class="item" id="deleteFile">
+          <p>Delete File</p>
+        </div>
+        <div class="item" id="copyFile">
+          <p>Copy File</p>
+        </div>
+        <div class="item" id="moveFile">
+          <p>Move File</p>
+        </div>
+      </div>
     </div>
 
     <div class="folderCreate" id="folderCreate">
-        <div>
-            <input type="text" id="folderName" placeholder="Folder Name">
-            <button id="create">Create</button>
-            <button onclick="closeMenu('folderCreate')">Close</button>
-        </div>
+      <div>
+        <input type="text" id="folderName" placeholder="Folder Name" />
+        <button id="create">Create</button>
+        <button onclick="closeMenu('folderCreate')">Close</button>
+      </div>
     </div>
 
     <div class="folderCreate" id="fileCreate">
-        <div>
-            <input type="text" id="fileName" placeholder="File Name">
-            <select id="extension">
-                <option value="">Select Extension</option>
-                <option value="txt">txt</option>
-                <option value="html">html</option>
-                <option value="png">png</option>
-                <option value="jpg">jpg</option>
-                <option value="mp4">mp4</option>
-                <option value="mp3">mp3</option>
-                <option value="pdf">pdf</option>
-                <option value="doc">doc</option>
-            </select>
-            <button id="createFileButton">Create</button>
-            <button onclick="closeMenu('fileCreate')">Close</button>
-        </div>
+      <div>
+        <input type="text" id="fileName" placeholder="File Name" />
+        <select id="extension">
+          <option value="">Select Extension</option>
+          <option value="txt">txt</option>
+          <option value="html">html</option>
+          <option value="png">png</option>
+          <option value="jpg">jpg</option>
+          <option value="mp4">mp4</option>
+          <option value="mp3">mp3</option>
+          <option value="pdf">pdf</option>
+          <option value="doc">doc</option>
+        </select>
+        <button id="createFileButton">Create</button>
+        <button onclick="closeMenu('fileCreate')">Close</button>
+      </div>
     </div>
 
     <div class="folderCreate" id="modify">
-        <div>
-            <input type="text" id="modName" placeholder="New Name">
-            <button id="modButton">Modify</button>
-            <button onclick="closeMenu('modify')">Close</button>
-        </div>
+      <div>
+        <input type="text" id="modName" placeholder="New Name" />
+        <button id="modButton">Modify</button>
+        <button onclick="closeMenu('modify')">Close</button>
+      </div>
     </div>
 
     <div class="folderCreate" id="delete">
-        <div>
-            <button id="delButton">Delete</button>
-            <button onclick="closeMenu('delete')">Close</button>
-        </div>
+      <div>
+        <button id="delButton">Delete</button>
+        <button onclick="closeMenu('delete')">Close</button>
+      </div>
     </div>
 
-    
     <div class="folderCreate" id="copy">
-        <div>
-            <button id="copyButton">Copy</button>
-            <button onclick="closeMenu('copy')">Close</button>
-        </div>
+      <div>
+        <button id="copyButton">Copy</button>
+        <button onclick="closeMenu('copy')">Close</button>
+      </div>
     </div>
 
     <div class="folderCreate" id="move">
-        <div>
-            <button id="moveButton">Move</button>
-            <button onclick="closeMenu('move')">Close</button>
-        </div>
+      <div>
+        <button id="moveButton">Move</button>
+        <button onclick="closeMenu('move')">Close</button>
+      </div>
     </div>
 
     <div class="divContent" id="showContent">
-        <div class="contentHeader headerDrag" id="dragHeader">
-            <span id="openedFileName"></span>
-            <div class="windowControls">
-                <button onclick="maximizeWindow('showContent')"><i class="fas fa-expand"></i></button>
-                <button onclick="closeMenu('showContent')"><i class="fas fa-times"></i></button>
-            </div>
+      <div class="contentHeader headerDrag" id="dragHeader">
+        <span id="openedFileName"></span>
+        <div class="windowControls">
+          <button onclick="maximizeWindow('showContent')">
+            <i class="fas fa-expand"></i>
+          </button>
+          <button onclick="closeMenu('showContent')">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-        <div class="contentOpened" id="contentDiv" contenteditable="true"></div>
-        <div class="contentButtons">
-            <button class="save" id="saveButton">Save</button>
-        </div>
+      </div>
+      <div class="contentOpened" id="contentDiv" contenteditable="true"></div>
+      <div class="contentButtons">
+        <button class="save" id="saveButton">Save</button>
+      </div>
     </div>
 
     <div class="divContent resize" id="showContent2">
-        <div class="contentHeader headerDrag" id="dragHeader2">
-            <span id="openedFileName2"></span>
-            <div class="windowControls">
-                <button onclick="maximizeWindow('showContent2')"><i class="fas fa-expand"></i></button>
-                <button onclick="closeMenu('showContent2')"><i class="fas fa-times"></i></button>
-            </div>
+      <div class="contentHeader headerDrag" id="dragHeader2">
+        <span id="openedFileName2"></span>
+        <div class="windowControls">
+          <button onclick="maximizeWindow('showContent2')">
+            <i class="fas fa-expand"></i>
+          </button>
+          <button onclick="closeMenu('showContent2')">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
-        <div class="placehold" id="Temp">
-            
-        </div>
-        <div class="contentButtons">
-            <button class="save" id="saveButton2">Save</button>
-        </div>
+      </div>
+      <div class="placehold" id="Temp"></div>
+      <div class="contentButtons">
+        <button class="save" id="saveButton2">Save</button>
+      </div>
     </div>
-
-
-</body>
-
+  </body>
 </html>

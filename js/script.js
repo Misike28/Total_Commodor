@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
   tableResizing();
+  tableResizing2();
 });
 
 /**
@@ -26,7 +27,38 @@ document.addEventListener("DOMContentLoaded", async function () {
  * Attaches event listeners to column resizer elements
  */
 function tableResizing() {
-  const resizers = document.querySelectorAll("th .resizer, .window .resizer");
+  const resizers = document.querySelectorAll("th .resizer");
+  let startX, startWidth, resizerParent;
+
+  resizers.forEach((resizer) => {
+    resizer.addEventListener("mousedown", initResize);
+
+    function initResize(e) {
+      startX = e.clientX;
+      resizerParent = resizer.parentElement;
+      startWidth = resizerParent.offsetWidth;
+      document.documentElement.addEventListener("mousemove", doResize);
+      document.documentElement.addEventListener("mouseup", stopResize);
+    }
+
+    function doResize(e) {
+      const newWidth = startWidth + (e.clientX - startX);
+      if (newWidth > 50) {
+        resizerParent.style.width = newWidth + "px";
+        resizerParent.style.minWidth = newWidth + "px";
+        resizerParent.style.maxWidth = newWidth + "px";
+      }
+    }
+
+    function stopResize() {
+      document.documentElement.removeEventListener("mousemove", doResize);
+      document.documentElement.removeEventListener("mouseup", stopResize);
+    }
+  });
+}
+
+function tableResizing2() {
+  const resizers = document.querySelectorAll(".window .valami");
   let startX, startWidth, resizerParent;
 
   resizers.forEach((resizer) => {
@@ -43,7 +75,7 @@ function tableResizing() {
 
     function doResize(e) {
       const newWidth = startWidth + (e.clientX - startX);
-      if (newWidth > 50) {
+      if (newWidth > 200) {
         pathResize.style.width = newWidth + "px";
         pathResize.style.minWidth = newWidth + "px";
         pathResize.style.maxWidth = newWidth + "px";
@@ -83,8 +115,7 @@ function lemezchange(lemez, pathId, dropdownId) {
   document.getElementById(pathId).innerHTML = lemez + ":\\";
   if (pathId == "path1") {
     lastlemez1 = lemez;
-  }
-  else {
+  } else {
     lastlemez2 = lemez;
   }
 
@@ -115,13 +146,15 @@ function getCurrentFolder(pathId) {
   let currentFolder = { files: adatok.drives[driv].files };
   for (let i = 0; i < pathArray.length; i++) {
     let talal = false;
-    const found = currentFolder.files.find((folder) => folder.name === pathArray[i]);
+    const found = currentFolder.files.find(
+      (folder) => folder.name === pathArray[i]
+    );
     if (found && found.files) {
       currentFolder = found;
       talal = true;
     }
     if (talal == false) {
-      defaultdriver(pathId === "path1" ? "path1" : "path2")
+      defaultdriver(pathId === "path1" ? "path1" : "path2");
       loadData(
         pathId === "path1" ? "tbody1" : "tbody2",
         pathId === "path1" ? "path1" : "path2"
@@ -170,25 +203,18 @@ function loadData(tbodyId, pathId) {
       const nameCell = document.createElement("td");
       if (file.extension == "folder") {
         nameCell.innerHTML = "<i class='fas fa-folder'></i> " + file.name;
-      }
-      else if (file.extension == "png" || file.extension == "jpg") {
+      } else if (file.extension == "png" || file.extension == "jpg") {
         nameCell.innerHTML = "<i class='fa-solid fa-image'></i> " + file.name;
-      }
-      else if (file.extension == "mp4") {
+      } else if (file.extension == "mp4") {
         nameCell.innerHTML = "<i class='fa-solid fa-video'></i> " + file.name;
-      }
-      else if (file.extension == "mp3") {
+      } else if (file.extension == "mp3") {
         nameCell.innerHTML = "<i class='fa-solid fa-music'></i> " + file.name;
-      }
-      else if (file.extension == "txt") {
+      } else if (file.extension == "txt") {
         nameCell.innerHTML = "<i class='fas fa-file-alt'></i> " + file.name;
-      }
-      else if (file.extension == "html") {
+      } else if (file.extension == "html") {
         nameCell.innerHTML = "<i class='fa-solid fa-globe'></i> " + file.name;
-      }
-      else {
+      } else {
         nameCell.innerHTML = file.name;
-
       }
 
       row.appendChild(nameCell);
@@ -200,22 +226,19 @@ function loadData(tbodyId, pathId) {
       const sizeCell = document.createElement("td");
       if (file.extension == "txt" || file.extension == "html") {
         let hossz = file.content.length;
-        let meret = Math.round(hossz / 1024 * 10) / 10;
+        let meret = Math.round((hossz / 1024) * 10) / 10;
         let meretbyte = "KB";
         if (meret > 1000) {
-          meretbyte = "MB"
-          meret = meret / 1000
-          Math.round(meret * 10) / 10
-        }
-        else if (hossz < 100) {
-          meretbyte = "B"
+          meretbyte = "MB";
+          meret = meret / 1000;
+          Math.round(meret * 10) / 10;
+        } else if (hossz < 100) {
+          meretbyte = "B";
           meret = hossz;
-          Math.round(meret * 10) / 10
+          Math.round(meret * 10) / 10;
         }
         sizeCell.textContent = meret + meretbyte;
-      }
-      else if (file.extension == "png" || file.extension == "jpg") {
-
+      } else if (file.extension == "png" || file.extension == "jpg") {
         var openedFile = document.getElementById("openedFileName2");
         var imageParent = document.getElementById("Temp");
         imageParent.innerHTML = "";
@@ -235,21 +258,18 @@ function loadData(tbodyId, pathId) {
         let meretbyte = "B";
 
         if (meret > 1000) {
-          meretbyte = "KB"
-          meret = meret / 1000
-          Math.round(meret * 10) / 10
+          meretbyte = "KB";
+          meret = meret / 1000;
+          Math.round(meret * 10) / 10;
         }
         if (meret > 1024) {
-          meretbyte = "MB"
-          meret = meret / 1024
-          meret = Math.round(meret * 10) / 10
+          meretbyte = "MB";
+          meret = meret / 1024;
+          meret = Math.round(meret * 10) / 10;
         }
-        meret = Math.round(meret * 10) / 10
+        meret = Math.round(meret * 10) / 10;
         sizeCell.textContent = meret + meretbyte;
-
-
-      }
-      else {
+      } else {
         sizeCell.textContent = file.size;
       }
       row.appendChild(sizeCell);
@@ -278,9 +298,15 @@ function loadData(tbodyId, pathId) {
 
         if (selectedWindow !== newWindow) {
           if (selectedWindow) {
-            document.getElementById(selectedWindow == "win1" ? "leftPath" : "rightPath").classList.remove('window-selected');
+            document
+              .getElementById(
+                selectedWindow == "win1" ? "leftPath" : "rightPath"
+              )
+              .classList.remove("window-selected");
           }
-          document.getElementById(newWindow == "win1" ? "leftPath" : "rightPath").classList.add('window-selected');
+          document
+            .getElementById(newWindow == "win1" ? "leftPath" : "rightPath")
+            .classList.add("window-selected");
           selectedWindow = newWindow;
         }
 
@@ -288,7 +314,8 @@ function loadData(tbodyId, pathId) {
           row.style.backgroundColor = "lightblue";
           if (selectedRow) {
             selectedRows.push(selectedRow);
-            selectedFiles[selectedRow.cells[0].textContent.trim()] = selectedPaths;
+            selectedFiles[selectedRow.cells[0].textContent.trim()] =
+              selectedPaths;
             selectedRow = null;
           }
           if (!selectedRows.includes(row)) {
@@ -324,8 +351,7 @@ function loadData(tbodyId, pathId) {
       row.ondblclick = function () {
         if (file.extension === "folder") {
           load(file.name, pathId);
-        }
-        else if (file.extension === "txt" || file.extension === "html") {
+        } else if (file.extension === "txt" || file.extension === "html") {
           createMenu("50%", "50%", "showContent");
           showContent(file.content, file.name, file.extension);
 
@@ -336,11 +362,9 @@ function loadData(tbodyId, pathId) {
               closeMenu("showContent");
             };
           }
-        }
-        else if (file.extension === "mp4" || file.extension === "mp3") {
+        } else if (file.extension === "mp4" || file.extension === "mp3") {
           alert("Idk how to play this file");
-        }
-        else if (file.extension === "png" || file.extension === "jpg") {
+        } else if (file.extension === "png" || file.extension === "jpg") {
           showImg(file.content, file.name, file.extension);
         }
       };
@@ -406,14 +430,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("win2"),
   ];
 
-
   // select current window
   windows.forEach((window) => {
     window.addEventListener("click", function () {
       if (selectedWindow) {
-        document.getElementById(selectedWindow == "win1" ? "leftPath" : "rightPath").classList.remove('window-selected');
+        document
+          .getElementById(selectedWindow == "win1" ? "leftPath" : "rightPath")
+          .classList.remove("window-selected");
       }
-      document.getElementById(window.id == "win1" ? "leftPath" : "rightPath").classList.add('window-selected');
+      document
+        .getElementById(window.id == "win1" ? "leftPath" : "rightPath")
+        .classList.add("window-selected");
       selectedWindow = window.id;
     });
   });
@@ -427,9 +454,8 @@ document.addEventListener("DOMContentLoaded", function () {
             div.id === "path1" ? "tbody1" : "tbody2",
             div.id === "path1" ? "path1" : "path2"
           );
-        }
-        catch {
-          defaultdriver(div.id === "path1" ? "path1" : "path2")
+        } catch {
+          defaultdriver(div.id === "path1" ? "path1" : "path2");
           loadData(
             div.id === "path1" ? "tbody1" : "tbody2",
             div.id === "path1" ? "path1" : "path2"
@@ -440,13 +466,10 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   function defaultdriver(path) {
     if (path == "path1") {
-      document.getElementById(path).innerHTML = lastlemez1 + ":\\"
+      document.getElementById(path).innerHTML = lastlemez1 + ":\\";
+    } else {
+      document.getElementById(path).innerHTML = lastlemez2 + ":\\";
     }
-    else {
-      document.getElementById(path).innerHTML = lastlemez2 + ":\\"
-    }
-
-
   }
 
   // right click event handler
@@ -489,8 +512,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (text === "") {
           alert("Add meg a fajl nevet");
           return;
-        }
-        else if (extension === "") {
+        } else if (extension === "") {
           alert("Add meg a fajl tipusat");
           return;
         }
@@ -522,15 +544,17 @@ function createMenu(posX, posY, menuId) {
     const menuWidth = menuElement.offsetWidth;
     const menuHeight = menuElement.offsetHeight;
 
-    menuElement.style.left = Math.max(0, (windowWidth / 2 - menuWidth / 2)) + "px";
-    menuElement.style.top = Math.max(0, (windowHeight / 2 - menuHeight / 2)) + "px";
+    menuElement.style.left =
+      Math.max(0, windowWidth / 2 - menuWidth / 2) + "px";
+    menuElement.style.top =
+      Math.max(0, windowHeight / 2 - menuHeight / 2) + "px";
   } else {
     menuElement.style.left = posX + "px";
     menuElement.style.top = posY + "px";
   }
 
   setTimeout(() => {
-    menuElement.classList.add('fade-in');
+    menuElement.classList.add("fade-in");
   }, 5);
 }
 
@@ -576,7 +600,6 @@ function showImg(fileContent, fileName, extension) {
   openedFile.textContent = filenev;
 }
 
-
 /**
  * Creates image viewer menu with proper dimensions
  * @param {string} menuId - Menu element ID
@@ -593,11 +616,11 @@ function createMenuImage(menuId, height, width) {
   const windowWidth = window.innerWidth;
   const windowHeight = window.innerHeight;
 
-  menuElement.style.left = (windowWidth / 2 - width / 2) + "px";
-  menuElement.style.top = (windowHeight / 2 - height / 2) + "px";
+  menuElement.style.left = windowWidth / 2 - width / 2 + "px";
+  menuElement.style.top = windowHeight / 2 - height / 2 + "px";
 
   setTimeout(() => {
-    menuElement.classList.add('fade-in');
+    menuElement.classList.add("fade-in");
   }, 5);
 }
 
@@ -612,16 +635,25 @@ function createAnyFile(pathId, extension) {
       ? document.getElementById("folderName").value
       : document.getElementById("fileName").value;
 
-  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-    var i = getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension)
-    console.log(i)
-    folderName = folderName + "(" + i.length + ")"
+  if (
+    getCurrentFolder(pathId).files.find((file) => file.name === folderName) &&
+    getCurrentFolder(pathId).files.find((file) => file.extension === extension)
+  ) {
+    var i =
+      getCurrentFolder(pathId).files.filter(
+        (file) => file.name === folderName
+      ) &&
+      getCurrentFolder(pathId).files.filter(
+        (file) => file.extension === extension
+      );
+    console.log(i);
+    folderName = folderName + "(" + i.length + ")";
   }
 
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
     extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
-  let content = ""
+  let content = "";
   if (extension === "png" || extension === "jpg") {
     content = "img/" + folderName + "." + extension;
   }
@@ -629,20 +661,18 @@ function createAnyFile(pathId, extension) {
     name: folderName,
     extension: extension,
     size: fileSize,
-    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+    date: new Intl.DateTimeFormat("en-CA").format(new Date()),
     ...(extension === "folder" ? { files: [] } : { content: "" }),
     content: content,
-
   });
 
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById('contentDiv').addEventListener('input', function () {
-
-    document.querySelector('.save').style.display = 'block';
-    document.querySelector('.contentButtons').style.display = 'block';
+  document.getElementById("contentDiv").addEventListener("input", function () {
+    document.querySelector(".save").style.display = "block";
+    document.querySelector(".contentButtons").style.display = "block";
   });
 
   const tables = [
@@ -669,7 +699,7 @@ function modifyTxtContent(fileName, pathId) {
     currentFolder.files.forEach((file) => {
       if (file.name === fileName) {
         file.content = document.getElementById("contentDiv").textContent;
-        file.date = new Intl.DateTimeFormat('en-CA').format(new Date());
+        file.date = new Intl.DateTimeFormat("en-CA").format(new Date());
       }
     });
   }
@@ -704,7 +734,9 @@ function modifyFile(fileName, pathId) {
  */
 function deleteFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
-  const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
+  const indexToDelete = currentFolder.files.findIndex(
+    (item) => item.name === fileName
+  );
   currentFolder.files.splice(indexToDelete, 1);
 
   loadData("tbody1", "path1");
@@ -713,81 +745,79 @@ function deleteFile(fileName, pathId) {
 
 function copyFile(fileName, pathId) {
   const currentFolder = getCurrentFolder(pathId);
-  const indexToCopy = currentFolder.files.find(item => item.name === fileName);
-  let ext = indexToCopy.extension
+  const indexToCopy = currentFolder.files.find(
+    (item) => item.name === fileName
+  );
+  let ext = indexToCopy.extension;
 
-
-  let id = "path1"
+  let id = "path1";
   if (pathId == "path1") {
-    id = "path2"
+    id = "path2";
   }
   document.getElementById("fileName").value = indexToCopy.name;
   let content;
   if (ext == "folder") {
     content = indexToCopy.files;
+  } else {
+    content = indexToCopy.content;
   }
-  else {
-    content = indexToCopy.content
-  }
-  console.log(content)
-  CreateCopy(indexToCopy.name, id, ext, content)
+  console.log(content);
+  CreateCopy(indexToCopy.name, id, ext, content);
 }
 
 function CreateCopy(name, pathId, extension, content) {
   let folderName = name;
 
-  // if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-  // var i = getCurrentFolder(pathId).files.filter((file) => file.name === folderName) && getCurrentFolder(pathId).files.filter((file) => file.extension === extension)
-  // console.log(i)
-  // folderName = folderName + "(" + i.length + ")"
-  // }
-
-  if (getCurrentFolder(pathId).files.find((file) => file.name === folderName) && getCurrentFolder(pathId).files.find((file) => file.extension === extension)) {
-    let justName = name.split(" ")
-    justName = justName.splice(0, justName.length).join(" ")
-    console.log(justName)
-    var i = getCurrentFolder(pathId).files.filter((file) => file.name.includes(justName)).filter((file) => file.extension === extension)
-    folderName = justName + " (" + i.length + ")"
+  if (
+    getCurrentFolder(pathId).files.find((file) => file.name === folderName) &&
+    getCurrentFolder(pathId).files.find((file) => file.extension === extension)
+  ) {
+    let justName = name.split(" ");
+    justName = justName.splice(0, justName.length).join(" ");
+    console.log(justName);
+    var i = getCurrentFolder(pathId)
+      .files.filter((file) => file.name.includes(justName))
+      .filter((file) => file.extension === extension);
+    folderName = justName + " (" + i.length + ")";
   }
 
   const currentFolder = getCurrentFolder(pathId);
   let fileSize =
     extension === "folder" ? "" : Math.floor(Math.random() * 1000) + "mb";
 
-
   currentFolder.files.push({
     name: folderName,
     extension: extension,
     size: fileSize,
-    date: new Intl.DateTimeFormat('en-CA').format(new Date()),
+    date: new Intl.DateTimeFormat("en-CA").format(new Date()),
     ...(extension === "folder" ? { files: content } : { content: content }),
-
   });
   loadData(pathId === "path1" ? "tbody1" : "tbody2", pathId);
 }
 
 function moveFile(fileName, pathId) {
-
   const currentFolder = getCurrentFolder(pathId);
-  const indexToCopy = currentFolder.files.find(item => item.name === fileName);
-  let ext = indexToCopy.extension
+  const indexToCopy = currentFolder.files.find(
+    (item) => item.name === fileName
+  );
+  let ext = indexToCopy.extension;
 
-
-  let id = "path1"
+  let id = "path1";
   if (pathId == "path1") {
-    id = "path2"
+    id = "path2";
   }
   document.getElementById("fileName").value = indexToCopy.name;
   let content;
   if (ext == "folder") {
     content = indexToCopy.files;
+  } else {
+    content = indexToCopy.content;
   }
-  else {
-    content = indexToCopy.content
-  }
-  console.log(content)
-  CreateCopy(indexToCopy.name, id, ext, content)
-  const indexToDelete = currentFolder.files.findIndex(item => item.name === fileName);
+  console.log(content);
+  CreateCopy(indexToCopy.name, id, ext, content);
+  const indexToDelete = currentFolder.files.findIndex(
+    (item) => item.name === fileName
+  );
   currentFolder.files.splice(indexToDelete, 1);
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
