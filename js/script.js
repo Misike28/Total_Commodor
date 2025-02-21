@@ -743,7 +743,16 @@ function deleteFile(fileName, pathId) {
   loadData("tbody2", "path2");
 }
 
+function copyclick(){
+  copyFile(selectedFile.name,selectedPaths)
+}
+
+function moveclick(){
+  moveFile(selectedFile.name,selectedPaths)
+}
+
 function copyFile(fileName, pathId) {
+  console.log(fileName,pathId)
   const currentFolder = getCurrentFolder(pathId);
   const indexToCopy = currentFolder.files.find(
     (item) => item.name === fileName
