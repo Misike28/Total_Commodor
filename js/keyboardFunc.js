@@ -95,6 +95,52 @@ function viewclick(pressedKey) {
   }
 }
 
+function copyclick(){
+  if (Object.keys(selectedFiles).length > 0) {
+    for (const [fileName, pathId] of Object.entries(selectedFiles)) {
+      copyFile(fileName,pathId)
+    }
+
+    selectedFiles = {};
+    selectedRows.forEach((row) => (row.style.backgroundColor = ""));
+    selectedRows = [];
+    selectedPaths = null;
+  } else if (selectedFile) {
+    copyFile(selectedFile.name, selectedPaths);
+    selectedFile = null;
+    if (selectedRow) {
+      selectedRow.style.backgroundColor = "";
+      selectedRow = null;
+    }
+    selectedPaths = null;
+  } else {
+    alert("nincs kivalasztva file");
+  }
+}
+
+function moveclick(){
+  if (Object.keys(selectedFiles).length > 0) {
+    for (const [fileName, pathId] of Object.entries(selectedFiles)) {
+      moveFile(fileName,pathId)
+    }
+
+    selectedFiles = {};
+    selectedRows.forEach((row) => (row.style.backgroundColor = ""));
+    selectedRows = [];
+    selectedPaths = null;
+  } else if (selectedFile) {
+    moveFile(selectedFile.name, selectedPaths);
+    selectedFile = null;
+    if (selectedRow) {
+      selectedRow.style.backgroundColor = "";
+      selectedRow = null;
+    }
+    selectedPaths = null;
+  } else {
+    alert("nincs kivalasztva file");
+  }
+}
+
 document.addEventListener("keydown", function (pressedKey) {
   if (
     (pressedKey.key === "Delete" || pressedKey.key === "F8") &&
@@ -110,7 +156,7 @@ document.addEventListener("keydown", function (pressedKey) {
   if (pressedKey.key === "F6") {
     pressedKey.preventDefault();
     if (selectedFile) {
-      moveFile(selectedFile.name, selectedPaths);
+      moveclick(selectedFile.name, selectedPaths);
     } else {
       alert("Válassz már ki egy filet te szerencsétlen");
     }
@@ -119,7 +165,7 @@ document.addEventListener("keydown", function (pressedKey) {
     pressedKey.preventDefault();
     console.log(selectedFile);
     if (selectedFile) {
-      copyFile(selectedFile.name, selectedPaths);
+      copyclick(selectedFile.name, selectedPaths);
     } else {
       alert("Válassz már ki egy filet te szerencsétlen");
     }

@@ -75,7 +75,7 @@ function tableResizing2() {
 
     function doResize(e) {
       const newWidth = startWidth + (e.clientX - startX);
-      if (newWidth > 200) {
+      if (newWidth > 200 && newWidth < 1100) {
         pathResize.style.width = newWidth + "px";
         pathResize.style.minWidth = newWidth + "px";
         pathResize.style.maxWidth = newWidth + "px";
@@ -743,13 +743,6 @@ function deleteFile(fileName, pathId) {
   loadData("tbody2", "path2");
 }
 
-function copyclick(){
-  copyFile(selectedFile.name,selectedPaths)
-}
-
-function moveclick(){
-  moveFile(selectedFile.name,selectedPaths)
-}
 
 function copyFile(fileName, pathId) {
   console.log(fileName,pathId)
