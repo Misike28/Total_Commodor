@@ -25,7 +25,7 @@
                         {
                             "name": "index",
                             "extension": "html",
-                            "size": "15MB",
+                            "size": "",
                             "date": "2024-05-10",
                             "content": "<html><head></head><body></body></html>"
                         },
@@ -38,7 +38,7 @@
                                 {
                                     "name": "passwords",
                                     "extension": "txt",
-                                    "size": "1kb",
+                                    "size": "",
                                     "date": "2025-01-30",
                                     "content": "123456"
                                 },
@@ -51,14 +51,14 @@
                                         {
                                             "name": "house keys",
                                             "extension": "txt",
-                                            "size": "1kb",
+                                            "size": "",
                                             "date": "2025-01-30",
                                             "content": "I lost them"
                                         },
                                         {
                                             "name": "car keys",
                                             "extension": "txt",
-                                            "size": "1kb",
+                                            "size": "",
                                             "date": "2025-01-30",
                                             "content": "I lost them"
                                         }
@@ -77,35 +77,35 @@
                         {
                             "name": "goth image",
                             "extension": "jpg",
-                            "size": "1kb",
+                            "size": "",
                             "date": "2025-01-30",
                             "content": "img/Wave_goth.jpg"
                         },
                         {
                             "name": "gubacs",
                             "extension": "png",
-                            "size": "1kb",
+                            "size": "",
                             "date": "2025-01-30",
                             "content": "img/vince.png"
                         },
                         {
                             "name": "Miku",
                             "extension": "png",
-                            "size": "1kb",
+                            "size": "",
                             "date": "2025-01-30",
                             "content": "img/Miku.png"
                         },
                         {
                             "name": "MR BEAAAST",
                             "extension": "jpg",
-                            "size": "1kb",
+                            "size": "",
                             "date": "2025-01-30",
                             "content": "img/bestiaur.jpg"
                         },
                         {
                             "name": "wtf",
                             "extension": "png",
-                            "size": "1kb",
+                            "size": "",
                             "date": "2025-01-30",
                             "content": "img/wtf.png"
                         }
@@ -164,7 +164,7 @@
                                         {
                                             "name": "funny image",
                                             "extension": "jpg",
-                                            "size": "1kb",
+                                            "size": "",
                                             "date": "2025-01-30",
                                             "content": "img/Monster_goth.jpg"
                                         },

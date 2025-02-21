@@ -213,7 +213,10 @@ function loadData(tbodyId, pathId) {
         nameCell.innerHTML = "<i class='fas fa-file-alt'></i> " + file.name;
       } else if (file.extension == "html") {
         nameCell.innerHTML = "<i class='fa-solid fa-globe'></i> " + file.name;
-      } else {
+      } else if(file.extension=="zip"){
+        nameCell.innerHTML = "<i class='fa-solid fa-file-zipper'></i> " + file.name;
+      }
+      else {
         nameCell.innerHTML = file.name;
       }
 
@@ -368,9 +371,9 @@ function loadData(tbodyId, pathId) {
           showImg(file.content, file.name, file.extension);
         }
       };
-
       row.oncontextmenu = function (event) {
         var contextMenu = document.getElementById("modOptions");
+        console.log(row)
         contextMenu.style.display = "block";
         contextMenu.style.left = event.pageX + "px";
         contextMenu.style.top = event.pageY + "px";
@@ -408,6 +411,23 @@ function loadData(tbodyId, pathId) {
             moveFile(file.name, pathId);
           };
         };
+        
+        if(row.childNodes[1].innerHTML=="folder"){
+          document.getElementById("zipFile").style.display="block"
+          let createzipMenu = document.getElementById("zipFile");
+          createzipMenu.onclick = function () {
+            createMenu(event.pageX, event.pageY, "move");
+            let moveButton = document.getElementById("moveButton");
+            moveButton.onclick = function () {
+              zipfile(file.name, pathId);
+            };
+          };
+        }
+        else{
+          console.log("nem hal")
+          document.getElementById("zipFile").style.display="none"
+        }
+
       };
 
       document.addEventListener("click", function () {
@@ -745,7 +765,6 @@ function deleteFile(fileName, pathId) {
 
 
 function copyFile(fileName, pathId) {
-  console.log(fileName,pathId)
   const currentFolder = getCurrentFolder(pathId);
   const indexToCopy = currentFolder.files.find(
     (item) => item.name === fileName
@@ -824,3 +843,25 @@ function moveFile(fileName, pathId) {
   loadData("tbody1", "path1");
   loadData("tbody2", "path2");
 }
+
+function zipfile(fileName, pathId){
+  const currentFolder = getCurrentFolder(pathId);
+  const indexToCopy = currentFolder.files.find(
+    (item) => item.name === fileName
+  );
+  let ext = "zip";
+
+
+  
+  document.getElementById("fileName").value = indexToCopy.name;
+  let content;
+  if (ext == "folder") {
+    content = indexToCopy.files;
+  } else {
+    content = indexToCopy.content;
+  }
+  console.log(content);
+  CreateCopy(indexToCopy.name, pathId, ext, content);
+}
+
+
