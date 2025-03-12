@@ -81,7 +81,8 @@ function viewclick(pressedKey) {
     showImg(selectedFile.content, selectedFile.name, selectedFile.extension);
   } else if (
     selectedFile.extension === "txt" ||
-    selectedFile.extension === "html"
+    selectedFile.extension === "html" ||
+    selectedFile.extension === "doc"
   ) {
     createMenu(pressedKey.pageX, pressedKey.pageY, "showContent");
     showContent(

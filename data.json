@@ -30,6 +30,13 @@
                             "content": "<html><head></head><body></body></html>"
                         },
                         {
+                            "name": "home task",
+                            "extension": "doc",
+                            "size": "",
+                            "date": "2024-07-16",
+                            "content": "My dream job is to be part of a bigger indie developer company. The reason i want to work for an indie company, is because they really put passion into their projects and not just making the same game over and over like bigger compaines do, while most likely still having the money to make a decent game. The reason i dont want to aim for a bigger company such as Valve, is because there i am only a small part of the machine, my decisions and opinions can’t change the game, while being in a smaller developer group my decisions can shape the game. Bigger companies dont care about your feelings, and you can be stuck making game that you hate and dont want to develop which can be really tiring for your mental health. I also dont want to be a solo indie developer because getting the neccesary funds to make the game i want to make can be really difficult without either having a really great idea, which people want to support or already having a follower base who will support you.. Being in a group can also be more beneficial, since you are more likely to get a cut from the games total income, rather than a fix payment which may not even be one percent of the total income. In my opinion being in a small group is the most beneficial, and least mentally tiring"
+                        },
+                        {
                             "name": "secret",
                             "extension": "folder",
                             "size": "",
@@ -44,7 +51,7 @@
                                 },
                                 {
                                     "name": "keys",
-                                    "extension": "folder",
+                                    "extension": "zip",
                                     "size": "",
                                     "date": "2025-01-30",
                                     "files": [
@@ -60,7 +67,7 @@
                                             "extension": "txt",
                                             "size": "",
                                             "date": "2025-01-30",
-                                            "content": "I lost them"
+                                            "content": "🚗🔑🔑"
                                         }
                                     ]
                                 }
@@ -134,6 +141,13 @@
                             "size": "56MB",
                             "date": "2025-01-30",
                             "content": ""
+                        },
+                        {
+                            "name": "Me at the zoo",
+                            "extension": "mp4",
+                            "size": "6MB",
+                            "date": "2025-03-06",
+                            "content": "<iframe width='560' height='315' src='https://www.youtube.com/embed/jNQXAC9IVRw?si=-wEWp69qtIlYQ9_4' title='YouTube video player' frameborder='0' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' referrerpolicy='strict-origin-when-cross-origin' allowfullscreen></iframe>"
                         },
                         {
                             "name": "illegal movie",

@@ -211,7 +211,10 @@ function loadData(tbodyId, pathId) {
         nameCell.innerHTML = "<i class='fa-solid fa-music'></i> " + file.name;
       } else if (file.extension == "txt") {
         nameCell.innerHTML = "<i class='fas fa-file-alt'></i> " + file.name;
-      } else if (file.extension == "html") {
+      } else if (file.extension == "doc") {
+        nameCell.innerHTML = "<i class='fas fa-file-word'></i> " + file.name;
+      } 
+      else if (file.extension == "html") {
         nameCell.innerHTML = "<i class='fa-solid fa-globe'></i> " + file.name;
       } else if(file.extension=="zip"){
         nameCell.innerHTML = "<i class='fa-solid fa-file-zipper'></i> " + file.name;
@@ -227,7 +230,7 @@ function loadData(tbodyId, pathId) {
       row.appendChild(extensionCell);
 
       const sizeCell = document.createElement("td");
-      if (file.extension == "txt" || file.extension == "html") {
+      if (file.extension == "txt" || file.extension == "html" || file.extension == "doc") {
         let hossz = file.content.length;
         let meret = Math.round((hossz / 1024) * 10) / 10;
         let meretbyte = "KB";
@@ -272,7 +275,23 @@ function loadData(tbodyId, pathId) {
         }
         meret = Math.round(meret * 10) / 10;
         sizeCell.textContent = meret + meretbyte;
-      } else {
+      } else if(file.extension == "zip"){
+        let meret = 0;
+        currentFolder.files.forEach((file) => {
+          meret += file.size;
+        });
+
+        let meretbyte = "KB";
+        if (meret > 1000) {
+          meretbyte = "MB";
+          meret = meret / 1000;
+          Math.round(meret * 10) / 10;
+        } else if (meret < 100) {
+          meretbyte = "B";
+          meret = meret/1000;
+          Math.round(meret * 10) / 10;
+        }
+      }else{
         sizeCell.textContent = file.size;
       }
       row.appendChild(sizeCell);
@@ -325,7 +344,6 @@ function loadData(tbodyId, pathId) {
             selectedRows.push(row);
             selectedFiles[fileName] = pathId;
             selectedPaths = pathId;
-            console.log(selectedFiles);
           }
         } else {
           selectedRows.forEach((row) => {
@@ -354,7 +372,7 @@ function loadData(tbodyId, pathId) {
       row.ondblclick = function () {
         if (file.extension === "folder") {
           load(file.name, pathId);
-        } else if (file.extension === "txt" || file.extension === "html") {
+        } else if (file.extension === "txt" || file.extension === "html" || file.extension === "doc") {
           createMenu("50%", "50%", "showContent");
           showContent(file.content, file.name, file.extension);
 
@@ -365,9 +383,13 @@ function loadData(tbodyId, pathId) {
               closeMenu("showContent");
             };
           }
-        } else if (file.extension === "mp4" || file.extension === "mp3") {
+        } else if (file.extension === "mp3") {
           alert("Idk how to play this file");
-        } else if (file.extension === "png" || file.extension === "jpg") {
+        }else if(file.extension=="mp4"){ 
+          showVideo(file.content, file.name, file.extension);
+        }
+        
+        else if (file.extension === "png" || file.extension === "jpg") {
           showImg(file.content, file.name, file.extension);
         }
       };
@@ -416,16 +438,30 @@ function loadData(tbodyId, pathId) {
           document.getElementById("zipFile").style.display="block"
           let createzipMenu = document.getElementById("zipFile");
           createzipMenu.onclick = function () {
-            createMenu(event.pageX, event.pageY, "move");
-            let moveButton = document.getElementById("moveButton");
-            moveButton.onclick = function () {
+            createMenu(event.pageX, event.pageY, "zip");
+            let zipButton = document.getElementById("zipButton");
+            zipButton.onclick = function () {
               zipfile(file.name, pathId);
             };
           };
         }
         else{
-          console.log("nem hal")
           document.getElementById("zipFile").style.display="none"
+        }
+
+        if(row.childNodes[1].innerHTML=="zip"){
+          document.getElementById("unzipFile").style.display="block"
+          let createunzipMenu = document.getElementById("unzipFile");
+          createunzipMenu.onclick = function () {
+            createMenu(event.pageX, event.pageY, "unzip");
+            let unzipButton = document.getElementById("unzipButton");
+            unzipButton.onclick = function () {
+              unzipfile(file.name, pathId);
+            };
+          };
+        }
+        else{
+          document.getElementById("unzipFile").style.display="none"
         }
 
       };
@@ -620,6 +656,14 @@ function showImg(fileContent, fileName, extension) {
   openedFile.textContent = filenev;
 }
 
+function showVideo(fileContent, fileName, extension) {
+  var openedFile = document.getElementById("openedFileName2");
+  document.getElementById("Temp").innerHTML = fileContent;
+  var filenev = fileName + "." + extension;
+  openedFile.textContent = filenev;
+
+}
+
 /**
  * Creates image viewer menu with proper dimensions
  * @param {string} menuId - Menu element ID
@@ -666,7 +710,6 @@ function createAnyFile(pathId, extension) {
       getCurrentFolder(pathId).files.filter(
         (file) => file.extension === extension
       );
-    console.log(i);
     folderName = folderName + "(" + i.length + ")";
   }
 
@@ -782,7 +825,6 @@ function copyFile(fileName, pathId) {
   } else {
     content = indexToCopy.content;
   }
-  console.log(content);
   CreateCopy(indexToCopy.name, id, ext, content);
 }
 
@@ -795,7 +837,6 @@ function CreateCopy(name, pathId, extension, content) {
   ) {
     let justName = name.split(" ");
     justName = justName.splice(0, justName.length).join(" ");
-    console.log(justName);
     var i = getCurrentFolder(pathId)
       .files.filter((file) => file.name.includes(justName))
       .filter((file) => file.extension === extension);
@@ -834,7 +875,6 @@ function moveFile(fileName, pathId) {
   } else {
     content = indexToCopy.content;
   }
-  console.log(content);
   CreateCopy(indexToCopy.name, id, ext, content);
   const indexToDelete = currentFolder.files.findIndex(
     (item) => item.name === fileName
@@ -850,9 +890,6 @@ function zipfile(fileName, pathId){
     (item) => item.name === fileName
   );
   let ext = "zip";
-
-
-  
   document.getElementById("fileName").value = indexToCopy.name;
   let content;
   if (ext == "folder") {
@@ -860,8 +897,24 @@ function zipfile(fileName, pathId){
   } else {
     content = indexToCopy.content;
   }
-  console.log(content);
   CreateCopy(indexToCopy.name, pathId, ext, content);
 }
+
+function unzipfile(fileName, pathId){
+  const currentFolder = getCurrentFolder(pathId);
+  const indexToCopy = currentFolder.files.find(
+    (item) => item.name === fileName
+  );
+  let ext = "folder";
+  document.getElementById("fileName").value = indexToCopy.name;
+  let content;
+  if (ext == "folder") {
+    content = indexToCopy.files;
+  } else {
+    content = indexToCopy.content;
+  }
+  CreateCopy(indexToCopy.name, pathId, ext, content);
+}
+
 
 
