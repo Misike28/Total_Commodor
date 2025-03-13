@@ -19,7 +19,7 @@ files can be interacted with in numerous different ways, such as:
 -every file can be renamed
 -files can be copied from one hard drive to the other, leaving behind the original as well
 -files can be moved to the other hard drive
--new folders and files can be created. the files format can be selected from a list
+-new folders and files can be created. the file's format can be selected from a list
 -files can be deleted from the drive
 -Folders can be zipped and later unzipped, maintaining their original content
 -multiple files can be selected at the same time, and the same action can be performed on all of them simultaniously such as copy move or delete
@@ -27,6 +27,7 @@ files can be interacted with in numerous different ways, such as:
 The user can set the width of both the attribute columns of each window, and the width of the windows itself.
 File sizes are calculated dinamically, updating if the user edits the file.
 The filepaths displayed on top of the windows are accurate, and they work even if the user manually types in the path.
+If two files share the same name and extension, they will be numbered in parentheses
 
 
 
